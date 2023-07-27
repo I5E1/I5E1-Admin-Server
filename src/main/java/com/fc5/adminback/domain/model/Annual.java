@@ -44,9 +44,6 @@ public class Annual {
     @Column(nullable = false)
     private Integer spentDays;
 
-    @Column(nullable = false)
-    private String reason;
-
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
