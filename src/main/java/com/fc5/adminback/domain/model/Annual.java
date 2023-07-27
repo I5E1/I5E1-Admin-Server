@@ -1,12 +1,16 @@
 package com.fc5.adminback.domain.model;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Entity
+@DynamicInsert
 public class Annual {
 
     @Id
@@ -16,6 +20,7 @@ public class Annual {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Member member;
 
     @Column(nullable = false)
@@ -29,6 +34,15 @@ public class Annual {
     @Column(nullable = false)
     @ColumnDefault("'REQUESTED'")
     private Status status;
+
+    @Column(nullable = false, length = 20)
+    private String summary;
+
+    @Column(nullable = false)
+    private String reason;
+
+    @Column(nullable = false)
+    private Integer spentDays;
 
     @Column(nullable = false)
     private String reason;

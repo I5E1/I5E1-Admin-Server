@@ -2,11 +2,13 @@ package com.fc5.adminback.domain.model;
 
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@DynamicInsert
 public class Member {
 
     @Id
@@ -31,6 +33,7 @@ public class Member {
     private Position position;
 
     @Column(nullable = false, columnDefinition = "INT UNSIGNED")
+    @ColumnDefault(value = "15")
     private int annualCount;
 
     private LocalDateTime createdAt;
