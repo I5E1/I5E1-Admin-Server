@@ -1,5 +1,8 @@
 package com.fc5.adminback.domain.model;
 
+import lombok.Getter;
+
+@Getter
 public enum Status {
 
     REQUESTED("신청 중"),
