@@ -21,9 +21,9 @@ public class AnnualController {
     private final AnnualService annualService;
 
     @GetMapping
-    public ResponseEntity<?> getAll() {
+    public ResponseEntity<?> getAll(int page) {
 
-        List<AnnualResponseDto> result = annualService.getAll().stream()
+        List<AnnualResponseDto> result = annualService.getAll(page).stream()
                 .map(AnnualResponseDto::of)
                 .collect(Collectors.toList());
         return APIDataResponse.of(HttpStatus.OK, "모든 연차 조회에 성공하였습니다.", result);
