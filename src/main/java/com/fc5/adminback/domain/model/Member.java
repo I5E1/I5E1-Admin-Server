@@ -1,7 +1,7 @@
 package com.fc5.adminback.domain.model;
 
 
-import lombok.Getter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -11,6 +11,9 @@ import java.time.LocalDateTime;
 @Entity
 @DynamicInsert
 @Getter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
     @Id

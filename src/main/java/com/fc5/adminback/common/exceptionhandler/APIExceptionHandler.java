@@ -46,6 +46,7 @@ public class APIExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<?> runtimeExceptionHandle(RuntimeException e, BindingResult bindingResult) {
+        System.out.println("hello!@");
         return handleExceptionInternal(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, bindingResult);
     }
     @ExceptionHandler
