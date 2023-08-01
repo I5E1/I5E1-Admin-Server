@@ -34,6 +34,11 @@ public class DutyController {
         List<DutyResponseDto> result = dutyService.getAll(page).stream()
                 .map(DutyResponseDto::of)
                 .collect(Collectors.toList());
-        return APIDataResponse.of(HttpStatus.OK, "모든 연차 조회에 성공하였습니다.", result);
+
+        if (result.size() == 0) {
+            throw new IllegalArgumentException("더 이상 당직 정보가 존재하지 않습니다.");
+        }
+
+        return APIDataResponse.of(HttpStatus.OK, "모든 당직 조회에 성공하였습니다.", result);
     }
 }

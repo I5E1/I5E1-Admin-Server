@@ -13,11 +13,8 @@ import java.time.LocalDate;
 public class DutyResponseDto {
     private MemberResponseDto member;
     private LocalDate dutyDate;
-    private LocalDate endDate;
     private String status;
-    private String summary;
     private String reason;
-    private Integer spentDays;
 
     public static DutyResponseDto of(Duty duty) {
         return DutyResponseDto.builder()
