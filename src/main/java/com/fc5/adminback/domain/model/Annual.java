@@ -1,5 +1,6 @@
 package com.fc5.adminback.domain.model;
 
+import com.fc5.adminback.domain.annual.UpdateAnnualRequestDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
@@ -7,9 +8,11 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.stream.IntStream;
 
 @Entity
 @DynamicInsert
@@ -53,4 +56,26 @@ public class Annual {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    public void updateByRequest(UpdateAnnualRequestDto updateAnnualRequestDto) {
+        this.status = updateAnnualRequestDto.getStatus();
+        this.updatedAt = LocalDateTime.now();
+        this.reason = updateAnnualRequestDto.getReason();
+        this.startDate = updateAnnualRequestDto.getStartDate();
+        this.endDate = updateAnnualRequestDto.getEndDate();
+        this.summary = updateAnnualRequestDto.getSummary();
+
+        calculateSpentDays();
+    }
+
+    private void calculateSpentDays() {
+        long size = ChronoUnit.DAYS.between(startDate, endDate) + 1;
+
+        long includedWeekendSize = IntStream.range(0, Long.valueOf(size).intValue())
+                .mapToObj(day -> startDate.plusDays(day))
+                .filter(localDate -> DayOfWeek.SATURDAY.equals(localDate.getDayOfWeek()) || DayOfWeek.SUNDAY.equals(localDate.getDayOfWeek()))
+                .count();
+
+        this.spentDays = Long.valueOf(size - includedWeekendSize).intValue();
+    }
 }
