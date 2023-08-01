@@ -57,4 +57,12 @@ public class DutyController {
 
         return APIDataResponse.empty(HttpStatus.OK, "연차 수정에 성공하였습니다");
     }
+
+    @DeleteMapping("/{dutyId}")
+    public ResponseEntity<?> delete(@PathVariable Long dutyId) {
+        Duty duty = dutyService.get(dutyId);
+        dutyService.delete(duty);
+
+        return APIDataResponse.empty(HttpStatus.OK, "당직 삭제에 성공하였습니다");
+    }
 }

@@ -7,11 +7,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class DutyService {
 
     private final DutyRepository dutyRepository;
@@ -32,5 +34,9 @@ public class DutyService {
         duty.updateByRequest(updateDutyRequestDto);
 
         dutyRepository.save(duty);
+    }
+
+    public void delete(Duty duty) {
+        dutyRepository.delete(duty);
     }
 }
