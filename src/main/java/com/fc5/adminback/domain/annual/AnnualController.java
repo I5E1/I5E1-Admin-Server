@@ -46,6 +46,14 @@ public class AnnualController {
 
         annualService.update(annual, updateAnnualRequestDto);
 
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return APIDataResponse.empty(HttpStatus.OK, "연차 수정에 성공하였습니다");
+    }
+
+    @DeleteMapping("/{annualId}")
+    public ResponseEntity<?> delete(@PathVariable Long annualId) {
+        Annual annual = annualService.get(annualId);
+        annualService.delete(annual);
+
+        return APIDataResponse.empty(HttpStatus.OK, "연차 삭제에 성공하였습니다");
     }
 }

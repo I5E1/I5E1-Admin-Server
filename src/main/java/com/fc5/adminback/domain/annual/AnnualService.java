@@ -31,4 +31,8 @@ public class AnnualService {
         return annualRepository.findById(annualId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 연차입니다."));
     }
+
+    public void delete(Annual annual) {
+        annualRepository.delete(annual);
+    }
 }
