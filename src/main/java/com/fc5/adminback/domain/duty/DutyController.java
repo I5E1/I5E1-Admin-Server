@@ -1,15 +1,17 @@
 package com.fc5.adminback.domain.duty;
 
 import com.fc5.adminback.common.APIDataResponse;
+import com.fc5.adminback.domain.annual.UpdateAnnualRequestDto;
+import com.fc5.adminback.domain.model.Annual;
+import com.fc5.adminback.domain.model.Duty;
+import com.fc5.adminback.domain.model.Status;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,5 +42,19 @@ public class DutyController {
         }
 
         return APIDataResponse.of(HttpStatus.OK, "모든 당직 조회에 성공하였습니다.", result);
+    }
+
+    @PutMapping("/{dutyId}")
+    public ResponseEntity<?> update(@PathVariable Long dutyId, @RequestBody UpdateDutyRequestDto updateDutyRequestDto) {
+
+        if (updateDutyRequestDto.getDutyDate().isAfter(LocalDate.now()) && updateDutyRequestDto.getStatus().equals(Status.COMPLETED)) {
+            throw new IllegalArgumentException("올바르지 않은 요청입니다.");
+        }
+
+        Duty duty = dutyService.get(dutyId);
+
+        dutyService.update(duty, updateDutyRequestDto);
+
+        return APIDataResponse.empty(HttpStatus.OK, "연차 수정에 성공하였습니다");
     }
 }

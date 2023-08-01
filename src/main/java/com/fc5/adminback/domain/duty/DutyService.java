@@ -22,4 +22,15 @@ public class DutyService {
                 Sort.Order.desc("createdAt")
         )));
     }
+
+    public Duty get(Long dutyId) {
+        return dutyRepository.findById(dutyId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 당직 정보입니다"));
+    }
+
+    public void update(Duty duty, UpdateDutyRequestDto updateDutyRequestDto) {
+        duty.updateByRequest(updateDutyRequestDto);
+
+        dutyRepository.save(duty);
+    }
 }

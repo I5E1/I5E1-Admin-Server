@@ -1,5 +1,6 @@
 package com.fc5.adminback.domain.model;
 
+import com.fc5.adminback.domain.duty.UpdateDutyRequestDto;
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
@@ -41,4 +42,11 @@ public class Duty {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    public void updateByRequest(UpdateDutyRequestDto updateDutyRequestDto) {
+        this.status = updateDutyRequestDto.getStatus();
+        this.updatedAt = LocalDateTime.now();
+        this.reason = updateDutyRequestDto.getReason();
+        this.dutyDate = updateDutyRequestDto.getDutyDate();
+    }
 }
