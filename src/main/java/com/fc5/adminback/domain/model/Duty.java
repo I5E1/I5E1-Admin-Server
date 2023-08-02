@@ -1,5 +1,7 @@
 package com.fc5.adminback.domain.model;
 
+import com.fc5.adminback.domain.duty.UpdateDutyRequestDto;
+import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.OnDelete;
@@ -7,10 +9,12 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 @DynamicInsert
+@Getter
 public class Duty {
 
     @Id
@@ -24,7 +28,7 @@ public class Duty {
     private Member member;
 
     @Column(nullable = false)
-    private Date dutyDate;
+    private LocalDate dutyDate;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -38,4 +42,11 @@ public class Duty {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    public void updateByRequest(UpdateDutyRequestDto updateDutyRequestDto) {
+        this.status = updateDutyRequestDto.getStatus();
+        this.updatedAt = LocalDateTime.now();
+        this.reason = updateDutyRequestDto.getReason();
+        this.dutyDate = updateDutyRequestDto.getDutyDate();
+    }
 }

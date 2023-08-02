@@ -6,9 +6,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class AnnualService {
 
     private final AnnualRepository annualRepository;
@@ -17,5 +19,20 @@ public class AnnualService {
                 Sort.Order.desc("status"),
                 Sort.Order.desc("createdAt")
         )));
+    }
+
+    public void update(Annual annual, UpdateAnnualRequestDto updateAnnualRequestDto) {
+        annual.updateByRequest(updateAnnualRequestDto);
+
+        annualRepository.save(annual);
+    }
+
+    public Annual get(Long annualId) {
+        return annualRepository.findById(annualId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 연차입니다."));
+    }
+
+    public void delete(Annual annual) {
+        annualRepository.delete(annual);
     }
 }
