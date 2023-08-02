@@ -76,6 +76,10 @@ public class Annual {
                 .filter(localDate -> DayOfWeek.SATURDAY.equals(localDate.getDayOfWeek()) || DayOfWeek.SUNDAY.equals(localDate.getDayOfWeek()))
                 .count();
 
+        // TODO : 계산한 spentDays가 member의 남은 연차 일 수 보다 크면 에러 처리
+
         this.spentDays = Long.valueOf(size - includedWeekendSize).intValue();
+
+        
     }
 }
