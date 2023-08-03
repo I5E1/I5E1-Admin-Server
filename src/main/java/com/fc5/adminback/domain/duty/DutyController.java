@@ -1,7 +1,11 @@
 package com.fc5.adminback.domain.duty;
 
 import com.fc5.adminback.common.APIDataResponse;
+import com.fc5.adminback.domain.admin.AdminService;
 import com.fc5.adminback.domain.annual.UpdateAnnualRequestDto;
+import com.fc5.adminback.domain.annual.exception.AnnualErrorCode;
+import com.fc5.adminback.domain.annual.exception.UnauthorizedAdminException;
+import com.fc5.adminback.domain.model.Admin;
 import com.fc5.adminback.domain.model.Annual;
 import com.fc5.adminback.domain.model.Duty;
 import com.fc5.adminback.domain.model.Status;
@@ -21,18 +25,18 @@ import java.util.stream.Collectors;
 public class DutyController {
 
     private final DutyService dutyService;
+    private final AdminService adminService;
 
     @GetMapping
     public ResponseEntity<?> getAll(
-//            @SessionAttribute(name = "adminId") Long adminId,
+            @SessionAttribute(name = "adminId") Long adminId,
             int page
     ) {
 
-        // TODO Session 구현되면 주석 풀기
-//        Admin admin = adminService.getAdminById(adminId);
-//        if (admin == null) {
-//            throw new UnauthorizedAdminException(AnnualErrorCode.UNAUTHORIZED);
-//        }
+        Admin admin = adminService.getAdminById(adminId);
+        if (admin == null) {
+            throw new UnauthorizedAdminException(AnnualErrorCode.UNAUTHORIZED);
+        }
         List<DutyResponseDto> result = dutyService.getAll(page).stream()
                 .map(DutyResponseDto::of)
                 .collect(Collectors.toList());

@@ -25,4 +25,9 @@ public class AdminService {
 
         return admin;
     }
+
+    public Admin getAdminById(Long adminId) {
+        return adminRepository.findById(adminId)
+                .orElseThrow(() -> new UnauthorizedAdminException(AnnualErrorCode.UNAUTHORIZED));
+    }
 }
