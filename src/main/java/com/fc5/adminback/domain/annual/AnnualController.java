@@ -21,18 +21,12 @@ import java.util.stream.Collectors;
 public class AnnualController {
 
     private final AnnualService annualService;
-    private final AdminService adminService;
 
     @GetMapping
     public ResponseEntity<?> getAll(
-            @SessionAttribute(name = "adminId") Long adminId,
             @ModelAttribute @Valid PageIndex pageIndex
     ) {
 
-        Admin admin = adminService.getAdminById(adminId);
-        if (admin == null) {
-            throw new UnauthorizedAdminException(AnnualErrorCode.UNAUTHORIZED);
-        }
         List<AnnualResponseDto> result = annualService.getAll(pageIndex.getPage()).stream()
                 .map(AnnualResponseDto::of)
                 .collect(Collectors.toList());
