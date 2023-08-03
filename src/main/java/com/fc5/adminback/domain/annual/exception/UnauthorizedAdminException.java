@@ -1,13 +1,10 @@
 package com.fc5.adminback.domain.annual.exception;
 
 import com.fc5.adminback.domain.annual.exception.AnnualErrorCode;
+import lombok.Getter;
 
-public class UnauthorizedAdminException extends RuntimeException {
-
-    private ErrorCode errorCode;
-
-    public UnauthorizedAdminException(ErrorCode errorCode) {
-        super(errorCode.getMessage());
-        this.errorCode = errorCode;
+public class UnauthorizedAdminException extends CustomBusinessException {
+    public UnauthorizedAdminException(String message, ErrorCode errorCode) {
+        super(message, errorCode);
     }
 }

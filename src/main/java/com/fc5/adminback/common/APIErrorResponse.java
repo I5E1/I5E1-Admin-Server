@@ -11,10 +11,10 @@ import org.springframework.http.ResponseEntity;
 public class APIErrorResponse<T> {
 
     private int statusCode;
-    private String[] message;
+    private String message;
 
-    public static <S> ResponseEntity<APIErrorResponse<S>> of(HttpStatus httpStatus, String[] messages) {
-        APIErrorResponse<S> response = new APIErrorResponse<>(httpStatus.value(), messages);
+    public static <S> ResponseEntity<APIErrorResponse<S>> of(HttpStatus httpStatus, String message) {
+        APIErrorResponse<S> response = new APIErrorResponse<>(httpStatus.value(), message);
         return new ResponseEntity<>(response, httpStatus);
     }
 }
