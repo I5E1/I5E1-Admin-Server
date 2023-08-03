@@ -1,6 +1,10 @@
 package com.fc5.adminback.domain.annual;
 
 import com.fc5.adminback.common.APIDataResponse;
+import com.fc5.adminback.domain.admin.AdminService;
+import com.fc5.adminback.domain.annual.exception.AnnualErrorCode;
+import com.fc5.adminback.domain.annual.exception.UnauthorizedAdminException;
+import com.fc5.adminback.domain.model.Admin;
 import com.fc5.adminback.domain.model.Annual;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,18 +21,18 @@ import java.util.stream.Collectors;
 public class AnnualController {
 
     private final AnnualService annualService;
+    private final AdminService adminService;
 
     @GetMapping
     public ResponseEntity<?> getAll(
-//            @SessionAttribute(name = "adminId") Long adminId,
+            @SessionAttribute(name = "adminId") Long adminId,
             @ModelAttribute @Valid PageIndex pageIndex
     ) {
 
-        // TODO Session 구현되면 주석 풀기
-//        Admin admin = adminService.getAdminById(adminId);
-//        if (admin == null) {
-//            throw new UnauthorizedAdminException(AnnualErrorCode.UNAUTHORIZED);
-//        }
+        Admin admin = adminService.getAdminById(adminId);
+        if (admin == null) {
+            throw new UnauthorizedAdminException(AnnualErrorCode.UNAUTHORIZED);
+        }
         List<AnnualResponseDto> result = annualService.getAll(pageIndex.getPage()).stream()
                 .map(AnnualResponseDto::of)
                 .collect(Collectors.toList());
