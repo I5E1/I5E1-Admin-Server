@@ -54,3 +54,22 @@ insert into duty (member_id, duty_date, status, reason, created_at, updated_at) 
 insert into duty (member_id, duty_date, status, reason, created_at, updated_at) values (8, DATE_ADD(NOW(), INTERVAL 9 DAY), 'APPROVED', '의무 당직', now(), now());
 insert into duty (member_id, duty_date, status, reason, created_at, updated_at) values (9, DATE_ADD(NOW(), INTERVAL 10 DAY), 'APPROVED', '의무 당직', now(), now());
 insert into duty (member_id, duty_date, status, reason, created_at, updated_at) values (10, DATE_ADD(NOW(), INTERVAL 11 DAY), 'APPROVED', '의무 당직', now(), now());
+
+
+
+insert into duty (duty_date, reason, status, member_id, created_at, updated_at) values (date_add(CURDATE(), interval -1 day), '의무 당직', 'COMPLETED', 4, now(), now());
+insert into duty (duty_date, reason, status, member_id, created_at, updated_at) values (date_add(CURDATE(), interval -2 day), '의무 당직', 'COMPLETED', 1, now(), now());
+insert into duty (duty_date, reason, status, member_id, created_at, updated_at) values (date_add(CURDATE(), interval -3 day), '의무 당직', 'COMPLETED', 2, now(), now());
+insert into duty (duty_date, reason, status, member_id, created_at, updated_at) values (date_add(CURDATE(), interval -4 day), '의무 당직', 'COMPLETED', 3, now(), now());
+insert into duty (duty_date, reason, status, member_id, created_at, updated_at) values (date_add(CURDATE(), interval -5 day), '의무 당직', 'COMPLETED', 4, now(), now());
+insert into duty (duty_date, reason, status, member_id, created_at, updated_at) values (date_add(CURDATE(), interval -6 day), '의무 당직', 'COMPLETED', 5, now(), now());
+insert into duty (duty_date, reason, status, member_id, created_at, updated_at) values (date_add(CURDATE(), interval -7 day), '의무 당직', 'COMPLETED', 6, now(), now());
+insert into duty (duty_date, reason, status, member_id, created_at, updated_at) values (date_add(CURDATE(), interval -8 day), '의무 당직', 'COMPLETED', 7, now(), now());
+insert into duty (duty_date, reason, status, member_id, created_at, updated_at) values (date_add(CURDATE(), interval -9 day), '의무 당직', 'COMPLETED', 8, now(), now());
+insert into duty (duty_date, reason, status, member_id, created_at, updated_at) values (date_add(CURDATE(), interval -10 day), '의무 당직', 'COMPLETED', 8, now(), now());
+insert into duty (duty_date, reason, status, member_id, created_at, updated_at) values (date_add(CURDATE(), interval -11 day), '의무 당직', 'COMPLETED', 8, now(), now());
+insert into duty (duty_date, reason, status, member_id, created_at, updated_at) values (date_add(CURDATE(), interval -13 day), '의무 당직', 'COMPLETED', 8, now(), now());
+insert into duty (duty_date, reason, status, member_id, created_at, updated_at) values (date_add(CURDATE(), interval -12 day), '의무 당직', 'COMPLETED', 8, now(), now());
+insert into duty (duty_date, reason, status, member_id, created_at, updated_at) values (date_add(CURDATE(), interval -14 day), '의무 당직', 'COMPLETED', 8, now(), now());
+insert into duty (duty_date, reason, status, member_id, created_at, updated_at) values (date_add(CURDATE(), interval -15 day), '의무 당직', 'COMPLETED', 8, now(), now());
+insert into duty (duty_date, reason, status, member_id, created_at, updated_at) values (date_add(CURDATE(), interval -16 day), '의무 당직', 'COMPLETED', 8, now(), now());
