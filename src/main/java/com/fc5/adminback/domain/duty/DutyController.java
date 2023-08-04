@@ -22,25 +22,12 @@ import java.util.stream.Collectors;
 public class DutyController {
 
     private final DutyService dutyService;
-    private final AdminService adminService;
 
     @GetMapping
     public ResponseEntity<?> getAll(
-            @SessionAttribute(name = "adminId") Long adminId,
             int page
     ) {
-
-        Admin admin = adminService.getAdminById(adminId);
-        if (admin == null) {
-            throw new UnauthorizedAdminException(AnnualErrorCode.UNAUTHORIZED.getMessage(), AnnualErrorCode.UNAUTHORIZED);
-        }
-        List<DutyResponseDto> result = dutyService.getAll(page).stream()
-                .map(DutyResponseDto::of)
-                .collect(Collectors.toList());
-
-        if (result.size() == 0) {
-            throw new IllegalArgumentException("더 이상 당직 정보가 존재하지 않습니다.");
-        }
+        DutyPagingResponseDto result = dutyService.getAll(page);
 
         return APIDataResponse.of(HttpStatus.OK, "모든 당직 조회에 성공하였습니다.", result);
     }
@@ -52,17 +39,15 @@ public class DutyController {
             throw new IllegalArgumentException("올바르지 않은 요청입니다.");
         }
 
-        Duty duty = dutyService.get(dutyId);
 
-        dutyService.update(duty, updateDutyRequestDto);
+        dutyService.update(dutyId, updateDutyRequestDto);
 
         return APIDataResponse.empty(HttpStatus.OK, "당직 수정에 성공하였습니다");
     }
 
     @DeleteMapping("/{dutyId}")
     public ResponseEntity<?> delete(@PathVariable Long dutyId) {
-        Duty duty = dutyService.get(dutyId);
-        dutyService.delete(duty);
+        dutyService.delete(dutyId);
 
         return APIDataResponse.empty(HttpStatus.OK, "당직 삭제에 성공하였습니다");
     }
