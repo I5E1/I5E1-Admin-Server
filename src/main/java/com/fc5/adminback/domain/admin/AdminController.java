@@ -82,4 +82,14 @@ public class AdminController {
 
         return APIDataResponse.empty(HttpStatus.OK, "회원의 남은 연차 일 수를 수정했습니다.");
     }
+
+    @PatchMapping("/api/position/{userId}")
+    public ResponseEntity<?> updatePosition(@PathVariable Long userId, UpdateUserPositionDto updateUserPositionDto) {
+        Member member = memberRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다"));
+
+        member.modifyPosition(updateUserPositionDto.getPosition());
+        memberRepository.save(member);
+        return APIDataResponse.empty(HttpStatus.OK, "회원의 직급을 수정하였습니다.");
+    }
 }
