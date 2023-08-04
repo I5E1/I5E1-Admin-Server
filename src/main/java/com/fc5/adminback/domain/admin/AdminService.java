@@ -1,9 +1,6 @@
 package com.fc5.adminback.domain.admin;
 
-import com.fc5.adminback.domain.admin.AdminLoginRequestDto;
-import com.fc5.adminback.domain.admin.AdminRepository;
 import com.fc5.adminback.domain.annual.exception.AnnualErrorCode;
-import com.fc5.adminback.domain.annual.exception.ErrorCode;
 import com.fc5.adminback.domain.annual.exception.UnauthorizedAdminException;
 import com.fc5.adminback.domain.model.Admin;
 import lombok.RequiredArgsConstructor;
