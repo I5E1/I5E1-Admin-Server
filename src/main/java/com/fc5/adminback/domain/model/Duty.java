@@ -15,6 +15,14 @@ import java.time.LocalDateTime;
 @Entity
 @DynamicInsert
 @Getter
+@Table(
+        name = "annual",
+        uniqueConstraints =
+        @UniqueConstraint(
+                name = "MEMBER_DUTYDATE_UNIQUE_IDX",
+                columnNames = {"member_id", "duty_date"}
+        )
+)
 public class Duty {
 
     @Id
