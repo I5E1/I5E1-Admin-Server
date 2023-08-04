@@ -1,12 +1,9 @@
 package com.fc5.adminback.domain.annual;
 
 import com.fc5.adminback.common.APIDataResponse;
-import com.fc5.adminback.domain.admin.AdminService;
-import com.fc5.adminback.domain.annual.exception.AnnualErrorCode;
-import com.fc5.adminback.domain.annual.exception.UnauthorizedAdminException;
-import com.fc5.adminback.domain.model.Admin;
 import com.fc5.adminback.domain.model.Annual;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +24,12 @@ public class AnnualController {
             @ModelAttribute @Valid PageIndex pageIndex
     ) {
 
-        List<AnnualResponseDto> result = annualService.getAll(pageIndex.getPage()).stream()
+        Page<Annual> all = annualService.getAll(pageIndex.getPage());
+        int totalPages = all.getTotalPages();
+        List<AnnualResponseDto> annuals = all.stream()
                 .map(AnnualResponseDto::of)
                 .collect(Collectors.toList());
+        AnnualPagingResponseDto result = AnnualPagingResponseDto.of(annuals, pageIndex.getPage(), totalPages);
         return APIDataResponse.of(HttpStatus.OK, "모든 연차 조회에 성공하였습니다.", result);
     }
 

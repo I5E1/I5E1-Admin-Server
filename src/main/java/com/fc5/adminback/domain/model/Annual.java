@@ -14,12 +14,20 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.stream.IntStream;
 
-@Entity
+@Entity(name = "annual")
 @DynamicInsert
 @Getter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(
+        name = "annual",
+        uniqueConstraints =
+        @UniqueConstraint(
+                name = "MEMBER_STARTDATE_ENDDATE_UNIQUE_IDX",
+                columnNames = {"member_id", "start_date", "end_date"}
+        )
+)
 public class Annual {
 
     @Id
@@ -28,14 +36,14 @@ public class Annual {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = false, name = "member_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Member member;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "start_date")
     private LocalDate startDate;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "end_date")
     private LocalDate endDate;
 
 
@@ -80,6 +88,6 @@ public class Annual {
 
         this.spentDays = Long.valueOf(size - includedWeekendSize).intValue();
 
-        
+
     }
 }
