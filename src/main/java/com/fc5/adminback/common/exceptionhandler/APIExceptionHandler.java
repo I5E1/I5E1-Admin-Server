@@ -1,6 +1,6 @@
 package com.fc5.adminback.common.exceptionhandler;
 
-import com.fc5.adminback.common.APIErrorResponse;
+import com.fc5.adminback.common.response.APIErrorResponse;
 import com.fc5.adminback.common.util.ErrorMessageConverter;
 import com.fc5.adminback.domain.annual.exception.CustomBusinessException;
 import lombok.extern.slf4j.Slf4j;
