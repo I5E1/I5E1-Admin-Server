@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class AnnualResponseDto {
+    private Long id;
     private MemberResponseDto member;
     private LocalDate startDate;
     private LocalDate endDate;
@@ -28,6 +29,7 @@ public class AnnualResponseDto {
 
     public static AnnualResponseDto of(Annual annual) {
         return AnnualResponseDto.builder()
+                .id(annual.getId())
                 .startDate(annual.getStartDate())
                 .endDate(annual.getEndDate())
                 .status(annual.getStatus().getDescription())

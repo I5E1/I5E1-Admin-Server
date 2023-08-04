@@ -60,7 +60,7 @@ class AnnualControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.statusCode").isNumber())
                 .andExpect(jsonPath("$.statusCode").value(200))
-                .andExpect(jsonPath("$.data").isArray())
+                .andExpect(jsonPath("$.data.annuals").isArray())
                 .andExpect(jsonPath("$.message").isString());
 //
         // then
