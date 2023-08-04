@@ -11,5 +11,4 @@ public class AdminBackApplication {
     public static void main(String[] args) {
         SpringApplication.run(AdminBackApplication.class, args);
     }
-
 }

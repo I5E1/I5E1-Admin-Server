@@ -31,7 +31,6 @@ public class APIExceptionHandler {
      * 커스텀 익셉션
      */
 
-
     @ExceptionHandler
     public ResponseEntity<?> httpRequestMethodNotSupportedExceptionHandle(HttpRequestMethodNotSupportedException e) {
         return handleExceptionInternal(e, "지원하지 않는 HttpMethod 요청입니다.", HttpStatus.METHOD_NOT_ALLOWED);
@@ -55,7 +54,6 @@ public class APIExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> methodArgumentNotValidExceptionHandle(MethodArgumentNotValidException e) {
-
         StringBuilder stringBuilder = new StringBuilder();
         String[] convert = ErrorMessageConverter.convert(e.getBindingResult());
         IntStream.range(1, convert.length + 1)
@@ -78,6 +76,7 @@ public class APIExceptionHandler {
     public ResponseEntity<?> runtimeExceptionHandle(RuntimeException e) {
         return handleExceptionInternal(e, e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
     @ExceptionHandler
     public ResponseEntity<?> exceptionHandle(Exception e) {
         return handleExceptionInternal(e, e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

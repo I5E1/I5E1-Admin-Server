@@ -9,6 +9,7 @@ public interface MemberWithCompletedDutyCount {
     Long getId();
 
     String getName();
+
     String getEmail();
 
     String getTel();

@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class AnnualResponseDto {
+
     private Long id;
     private MemberListResponseDto member;
     private LocalDate startDate;

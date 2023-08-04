@@ -35,7 +35,7 @@ public class Duty {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Member member;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "duty_date")
     private LocalDate dutyDate;
 
     @Enumerated(EnumType.STRING)
