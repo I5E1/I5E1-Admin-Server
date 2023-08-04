@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AnnualService {
 
     private final AnnualRepository annualRepository;
+
     public Page<Annual> getAll(int page) {
         return annualRepository.findAll(PageRequest.of(page - 1, 2, Sort.by(
                 Sort.Order.desc("status"),

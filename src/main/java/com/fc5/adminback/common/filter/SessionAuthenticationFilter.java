@@ -20,7 +20,6 @@ public class SessionAuthenticationFilter implements Filter {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
         ObjectMapper objectMapper = new ObjectMapper();
-
         if (
                 httpServletRequest.getRequestURI().equals("/api/login")
                         || httpServletRequest.getRequestURI().equals("/api/logout")
@@ -28,8 +27,6 @@ public class SessionAuthenticationFilter implements Filter {
             chain.doFilter(request, response);
             return;
         }
-
-
 
         try {
             HttpSession session = httpServletRequest.getSession(false);
@@ -44,7 +41,6 @@ public class SessionAuthenticationFilter implements Filter {
 
                 String jsonBody = objectMapper.writeValueAsString(body);
                 httpServletResponse.getWriter().write(jsonBody);
-
                 return;
             }
 

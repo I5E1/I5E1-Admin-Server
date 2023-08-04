@@ -1,6 +1,5 @@
 package com.fc5.adminback.domain.duty;
 
-import com.fc5.adminback.domain.member.MemberRepository;
 import com.fc5.adminback.domain.model.Duty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,7 +19,6 @@ public class DutyService {
     private final DutyRepository dutyRepository;
 
     public DutyPagingResponseDto getAll(int page) {
-
         Page<Duty> pages = getPages(page);
 
         int totalPage = pages.getTotalPages();
@@ -31,7 +29,6 @@ public class DutyService {
         }
 
         return DutyPagingResponseDto.of(result, page, totalPage);
-
     }
 
     private List<DutyResponseDto> getPagingResult(Page<Duty> pages) {
@@ -53,7 +50,6 @@ public class DutyService {
     }
 
     public void update(Long dutyId, UpdateDutyRequestDto updateDutyRequestDto) {
-
         Duty duty = get(dutyId);
         duty.updateByRequest(updateDutyRequestDto);
 
@@ -61,7 +57,6 @@ public class DutyService {
     }
 
     public void delete(Long dutyId) {
-
         Duty duty = get(dutyId);
         dutyRepository.delete(duty);
     }

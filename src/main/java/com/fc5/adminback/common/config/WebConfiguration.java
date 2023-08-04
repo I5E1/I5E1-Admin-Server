@@ -13,7 +13,6 @@ public class WebConfiguration {
     @Bean
     public FilterRegistrationBean<Filter> loginCheckFilter() {
         FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<>();
-
         registrationBean.setFilter(new SessionAuthenticationFilter());
 
         return registrationBean;

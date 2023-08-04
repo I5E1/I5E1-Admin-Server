@@ -2,7 +2,6 @@ package com.fc5.adminback.domain.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -10,6 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 public class Admin {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

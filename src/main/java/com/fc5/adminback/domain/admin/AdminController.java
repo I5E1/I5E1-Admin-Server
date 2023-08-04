@@ -27,8 +27,6 @@ public class AdminController {
     @PostMapping("api/login")
     public ResponseEntity<?> login(@RequestBody AdminLoginRequestDto adminLoginRequestDto, HttpServletRequest request) {
         Admin admin = adminService.login(adminLoginRequestDto);
-
-
         request.getSession().invalidate();
         HttpSession session = request.getSession(true);
 
@@ -40,7 +38,6 @@ public class AdminController {
 
     @GetMapping("api/logout")
     public ResponseEntity<?> logout(HttpServletRequest request) {
-
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
@@ -58,6 +55,7 @@ public class AdminController {
         if (pageIndex.getPage() > totalPages) {
             throw new IllegalArgumentException("더 이상 당직 정보가 존재하지 않습니다.");
         }
+
         PageRequest pageRequest = PageRequest.of(pageIndex.getPage() - 1, pageSize);
         List<MemberWithCompletedDutyCount> members = memberRepository.getAllMemberWithExecutedDutyCount(pageRequest);
         MemberWithCompletedDutyCountPagingResponseDto result =
@@ -67,19 +65,13 @@ public class AdminController {
 
     @GetMapping("/api/annual/{userId}")
     public ResponseEntity<?> updateAnnual(@PathVariable("userId") Long userId, @RequestParam int size) {
-
         if (size < 0) {
             throw new IllegalArgumentException("올바르지 않은 쿼리 입력입니다");
         }
-
         Member member = memberRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다"));
-
         member.modifiyAnnualCount(size);
-
         memberRepository.save(member);
-
-
         return APIDataResponse.empty(HttpStatus.OK, "회원의 남은 연차 일 수를 수정했습니다.");
     }
 
@@ -87,7 +79,6 @@ public class AdminController {
     public ResponseEntity<?> updatePosition(@PathVariable Long userId, UpdateUserPositionDto updateUserPositionDto) {
         Member member = memberRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다"));
-
         member.modifyPosition(updateUserPositionDto.getPosition());
         memberRepository.save(member);
         return APIDataResponse.empty(HttpStatus.OK, "회원의 직급을 수정하였습니다.");
