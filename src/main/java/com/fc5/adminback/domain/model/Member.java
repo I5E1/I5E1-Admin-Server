@@ -44,4 +44,8 @@ public class Member {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    public void modifiyAnnualCount(int size) {
+        this.annualCount = size;
+    }
 }

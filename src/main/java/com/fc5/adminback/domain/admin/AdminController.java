@@ -5,6 +5,7 @@ import com.fc5.adminback.domain.annual.PageIndex;
 import com.fc5.adminback.domain.member.MemberRepository;
 import com.fc5.adminback.domain.member.MemberWithCompletedDutyCount;
 import com.fc5.adminback.domain.model.Admin;
+import com.fc5.adminback.domain.model.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -49,7 +50,7 @@ public class AdminController {
     }
 
     @GetMapping("api/user")
-    public ResponseEntity<?> getAll(
+    public ResponseEntity<?> getPagingMemberList(
             @ModelAttribute @Valid PageIndex pageIndex
     ) {
         int pageSize = 3;
@@ -62,5 +63,23 @@ public class AdminController {
         MemberWithCompletedDutyCountPagingResponseDto result =
                 MemberWithCompletedDutyCountPagingResponseDto.of(members, totalPages, pageIndex.getPage());
         return APIDataResponse.of(HttpStatus.OK, "모든 유저 조회에 성공하였습니다.", result);
+    }
+
+    @GetMapping("/api/annual/{userId}")
+    public ResponseEntity<?> updateAnnual(@PathVariable("userId") Long userId, @RequestParam int size) {
+
+        if (size < 0) {
+            throw new IllegalArgumentException("올바르지 않은 쿼리 입력입니다");
+        }
+
+        Member member = memberRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다"));
+
+        member.modifiyAnnualCount(size);
+
+        memberRepository.save(member);
+
+
+        return APIDataResponse.empty(HttpStatus.OK, "회원의 남은 연차 일 수를 수정했습니다.");
     }
 }
