@@ -2,11 +2,9 @@ package com.fc5.adminback.domain.duty;
 
 import com.fc5.adminback.common.APIDataResponse;
 import com.fc5.adminback.domain.admin.AdminService;
-import com.fc5.adminback.domain.annual.UpdateAnnualRequestDto;
 import com.fc5.adminback.domain.annual.exception.AnnualErrorCode;
 import com.fc5.adminback.domain.annual.exception.UnauthorizedAdminException;
 import com.fc5.adminback.domain.model.Admin;
-import com.fc5.adminback.domain.model.Annual;
 import com.fc5.adminback.domain.model.Duty;
 import com.fc5.adminback.domain.model.Status;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
