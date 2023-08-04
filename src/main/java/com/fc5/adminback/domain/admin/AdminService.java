@@ -17,10 +17,10 @@ public class AdminService {
 
     public Admin login(AdminLoginRequestDto loginRequestDto) {
         Admin admin = adminRepository.findByEmail(loginRequestDto.getEmail())
-                .orElseThrow(() -> new UnauthorizedAdminException(AnnualErrorCode.UNAUTHORIZED));
+                .orElseThrow(() -> new UnauthorizedAdminException(AnnualErrorCode.UNAUTHORIZED.getMessage(), AnnualErrorCode.UNAUTHORIZED));
 
         if (!admin.getPassword().equals(loginRequestDto.getPassword())) {
-            throw new UnauthorizedAdminException(AnnualErrorCode.UNAUTHORIZED);
+            throw new UnauthorizedAdminException(AnnualErrorCode.UNAUTHORIZED.getMessage(), AnnualErrorCode.UNAUTHORIZED);
         }
 
         return admin;
@@ -28,6 +28,6 @@ public class AdminService {
 
     public Admin getAdminById(Long adminId) {
         return adminRepository.findById(adminId)
-                .orElseThrow(() -> new UnauthorizedAdminException(AnnualErrorCode.UNAUTHORIZED));
+                .orElseThrow(() -> new UnauthorizedAdminException(AnnualErrorCode.UNAUTHORIZED.getMessage(), AnnualErrorCode.UNAUTHORIZED));
     }
 }

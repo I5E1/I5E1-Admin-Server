@@ -35,7 +35,7 @@ public class DutyController {
 
         Admin admin = adminService.getAdminById(adminId);
         if (admin == null) {
-            throw new UnauthorizedAdminException(AnnualErrorCode.UNAUTHORIZED);
+            throw new UnauthorizedAdminException(AnnualErrorCode.UNAUTHORIZED.getMessage(), AnnualErrorCode.UNAUTHORIZED);
         }
         List<DutyResponseDto> result = dutyService.getAll(page).stream()
                 .map(DutyResponseDto::of)
