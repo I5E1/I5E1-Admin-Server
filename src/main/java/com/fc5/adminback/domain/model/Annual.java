@@ -1,6 +1,6 @@
 package com.fc5.adminback.domain.model;
 
-import com.fc5.adminback.domain.annual.UpdateAnnualRequestDto;
+import com.fc5.adminback.domain.annual.dto.UpdateAnnualRequestDto;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;

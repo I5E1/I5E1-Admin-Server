@@ -1,6 +1,6 @@
 package com.fc5.adminback.domain.model;
 
-import com.fc5.adminback.domain.duty.UpdateDutyRequestDto;
+import com.fc5.adminback.domain.duty.dto.UpdateDutyRequestDto;
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
@@ -8,7 +8,6 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 

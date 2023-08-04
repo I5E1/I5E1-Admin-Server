@@ -1,8 +1,8 @@
 package com.fc5.adminback.common.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fc5.adminback.common.APIDataResponse;
-import com.fc5.adminback.domain.annual.exception.AnnualErrorCode;
+import com.fc5.adminback.common.response.APIDataResponse;
+import com.fc5.adminback.domain.annual.exception.errorcode.AnnualErrorCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
