@@ -48,4 +48,8 @@ public class Member {
     public void modifiyAnnualCount(int size) {
         this.annualCount = size;
     }
+
+    public void modifyPosition(Position position) {
+        this.position = position;
+    }
 }
