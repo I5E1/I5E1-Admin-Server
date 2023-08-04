@@ -1,14 +1,9 @@
 package com.fc5.adminback.domain.admin;
 
-import com.fc5.adminback.domain.admin.AdminLoginRequestDto;
-import com.fc5.adminback.domain.admin.AdminRepository;
-import com.fc5.adminback.domain.annual.AnnualRepository;
 import com.fc5.adminback.domain.annual.exception.AnnualErrorCode;
-import com.fc5.adminback.domain.annual.exception.ErrorCode;
 import com.fc5.adminback.domain.annual.exception.UnauthorizedAdminException;
 import com.fc5.adminback.domain.member.MemberRepository;
 import com.fc5.adminback.domain.model.Admin;
-import com.fc5.adminback.domain.model.Annual;
 import com.fc5.adminback.domain.model.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,7 +16,6 @@ import org.springframework.stereotype.Service;
 public class AdminService {
 
     private final AdminRepository adminRepository;
-    private final MemberRepository memberRepository;
 
     public Admin login(AdminLoginRequestDto loginRequestDto) {
         Admin admin = adminRepository.findByEmail(loginRequestDto.getEmail())
@@ -32,16 +26,5 @@ public class AdminService {
         }
 
         return admin;
-    }
-
-    public Admin getAdminById(Long adminId) {
-        return adminRepository.findById(adminId)
-                .orElseThrow(() -> new UnauthorizedAdminException(AnnualErrorCode.UNAUTHORIZED.getMessage(), AnnualErrorCode.UNAUTHORIZED));
-    }
-
-    public Page<Member> getAll(int page) {
-        return memberRepository.findAll(PageRequest.of(page - 1, 2, Sort.by(
-                Sort.Order.desc("createdAt")
-        )));
     }
 }
