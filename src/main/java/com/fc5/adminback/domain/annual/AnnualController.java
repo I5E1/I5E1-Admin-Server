@@ -40,6 +40,8 @@ public class AnnualController {
             throw new IllegalArgumentException("올바르지 않은 기간입니다");
         }
 
+        // TODO 수정하려는 기간의 시작 혹은 끝 중 하나의 시점이라도 이미 신청해둔 연차의 기간에 포함하면 예외 처리
+
         Annual annual = annualService.get(annualId);
 
         annualService.update(annual, updateAnnualRequestDto);

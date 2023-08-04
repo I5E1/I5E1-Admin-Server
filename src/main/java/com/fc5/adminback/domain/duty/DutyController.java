@@ -38,6 +38,7 @@ public class DutyController {
         if (updateDutyRequestDto.getDutyDate().isAfter(LocalDate.now()) && updateDutyRequestDto.getStatus().equals(Status.COMPLETED)) {
             throw new IllegalArgumentException("올바르지 않은 요청입니다.");
         }
+        // TODO 수정하려는 기간의 시작 혹은 끝 중 하나의 시점이라도 이미 신청해둔 연차의 기간에 포함하면 예외 처리
 
 
         dutyService.update(dutyId, updateDutyRequestDto);
