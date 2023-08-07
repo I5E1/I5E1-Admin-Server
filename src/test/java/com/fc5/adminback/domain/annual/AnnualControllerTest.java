@@ -1,5 +1,7 @@
 package com.fc5.adminback.domain.annual;
 
+import com.fc5.adminback.domain.annual.dto.AnnualPagingResponseDto;
+import com.fc5.adminback.domain.annual.dto.AnnualResponseDto;
 import com.fc5.adminback.domain.annual.mock.MockPage;
 import com.fc5.adminback.domain.annual.service.AnnualService;
 import com.fc5.adminback.domain.model.Annual;
@@ -16,9 +18,14 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.validation.BindException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -48,6 +55,10 @@ class AnnualControllerTest {
 
         // given
         Page<Annual> page = new MockPage(1);
+        List<AnnualResponseDto> annualResponseDtos = new ArrayList<>();
+        AnnualPagingResponseDto annualPagingResponseDtoMock = AnnualPagingResponseDto.of(annualResponseDtos, 1, 11);
+        given(annualService.getCount()).willReturn(11);
+        given(annualService.getAllAnnuals(1)).willReturn(annualPagingResponseDtoMock);
         given(annualService.getAll(1)).willReturn(page);
         httpSession.setAttribute("adminId", 1L);
 
@@ -63,8 +74,10 @@ class AnnualControllerTest {
                 .andExpect(jsonPath("$.statusCode").value(200))
                 .andExpect(jsonPath("$.data.annuals").isArray())
                 .andExpect(jsonPath("$.message").isString());
-        // then
-        then(annualService).should().getAll(1);
+
+
+        then(annualService).should(times(1)).getCount();
+
     }
 
     @DisplayName("[/api/annual?page=int.class] 모든 연차 조회 컨트롤러 테스트 - 에러 [쿼리스트링 범위 에러]")
