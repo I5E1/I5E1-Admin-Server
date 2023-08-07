@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberListResponseDto {
 
-    private Long id;
+    private Long memberId;
     private String name;
     private String email;
     private Position position;
@@ -19,7 +19,7 @@ public class MemberListResponseDto {
 
     public static MemberListResponseDto of(Member member) {
         return MemberListResponseDto.builder()
-                .id(member.getId())
+                .memberId(member.getId())
                 .name(member.getName())
                 .email(member.getEmail())
                 .position(member.getPosition())

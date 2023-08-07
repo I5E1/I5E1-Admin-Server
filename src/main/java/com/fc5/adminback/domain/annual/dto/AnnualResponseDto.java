@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class AnnualResponseDto {
 
-    private Long id;
+    private Long annualId;
     private MemberListResponseDto member;
     private LocalDate startDate;
     private LocalDate endDate;
@@ -23,7 +23,7 @@ public class AnnualResponseDto {
 
     public static AnnualResponseDto of(Annual annual) {
         return AnnualResponseDto.builder()
-                .id(annual.getId())
+                .annualId(annual.getId())
                 .startDate(annual.getStartDate())
                 .endDate(annual.getEndDate())
                 .status(annual.getStatus().getDescription())
