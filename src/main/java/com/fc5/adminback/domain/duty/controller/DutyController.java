@@ -29,8 +29,6 @@ public class DutyController {
 
     @PutMapping("/{dutyId}")
     public ResponseEntity<?> update(@PathVariable Long dutyId, @RequestBody @Valid UpdateDutyRequestDto updateDutyRequestDto) {
-        // TODO 수정하려는 기간의 시작 혹은 끝 중 하나의 시점이라도 이미 신청해둔 연차의 기간에 포함하면 예외 처리
-
 
         dutyService.update(dutyId, updateDutyRequestDto);
 
