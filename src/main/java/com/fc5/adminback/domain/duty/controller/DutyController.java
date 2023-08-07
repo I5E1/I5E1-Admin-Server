@@ -7,8 +7,9 @@ import com.fc5.adminback.domain.duty.service.DutyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,7 +28,7 @@ public class DutyController {
     }
 
     @PutMapping("/{dutyId}")
-    public ResponseEntity<?> update(@PathVariable Long dutyId, @RequestBody @Validated UpdateDutyRequestDto updateDutyRequestDto) {
+    public ResponseEntity<?> update(@PathVariable Long dutyId, @RequestBody @Valid UpdateDutyRequestDto updateDutyRequestDto) {
         // TODO 수정하려는 기간의 시작 혹은 끝 중 하나의 시점이라도 이미 신청해둔 연차의 기간에 포함하면 예외 처리
 
 

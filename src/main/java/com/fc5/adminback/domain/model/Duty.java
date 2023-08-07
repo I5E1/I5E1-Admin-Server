@@ -53,7 +53,5 @@ public class Duty {
     public void updateByRequest(UpdateDutyRequestDto updateDutyRequestDto) {
         this.status = updateDutyRequestDto.getStatus();
         this.updatedAt = LocalDateTime.now();
-        this.reason = updateDutyRequestDto.getReason();
-        this.dutyDate = updateDutyRequestDto.getDutyDate();
     }
 }

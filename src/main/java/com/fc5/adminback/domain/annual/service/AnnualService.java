@@ -60,13 +60,20 @@ public class AnnualService {
 
     @Transactional
     public void validatePeriod(Long annualId, UpdateAnnualRequestDto updateAnnualRequestDto) {
-        Annual annual = annualRepository.findById(annualId)
-                .orElseThrow(() -> new NotFoundEntityException(AnnualErrorCode.NOT_FOUND_ANNUAL.getMessage(), AnnualErrorCode.NOT_FOUND_ANNUAL));
+        Annual annual = getAnnual(annualId);
+        // TODO Paging Response Dto (멤버, 연차 당직) totalPages -> totalCount로 변경하기
+        // TODO 신청 중 -> 미승인
+        // TODO 승인완료 -> 승인
+        // TODO 취소완료 -> 취소
+        // TODO 요청반려 -> 반려
+        // TODO 완료 -> 완료
+        // TODO 연차, 당직 수정 -> status만 보내기
+        // TODO Logout API 문서 작성
+        // TODO Admin, Main 코드 서버에 반영하기
+//        List<Annual> annualsByInvalidDate = annualRepository.findAnnualByInvalidDate(annual.getMember().getId(), updateAnnualRequestDto.getStartDate(), updateAnnualRequestDto.getEndDate());
 
-        List<Annual> annualsByInvalidDate = annualRepository.findAnnualByInvalidDate(annual.getMember().getId(), updateAnnualRequestDto.getStartDate(), updateAnnualRequestDto.getEndDate());
-
-        if (annualsByInvalidDate.size() != 0) {
-            throw new OverlappingPeriodException(AnnualErrorCode.OVERLAPPING_PERIOD.getMessage(), AnnualErrorCode.OVERLAPPING_PERIOD);
-        }
+//        if (annualsByInvalidDate.size() != 0) {
+//            throw new OverlappingPeriodException(AnnualErrorCode.OVERLAPPING_PERIOD.getMessage(), AnnualErrorCode.OVERLAPPING_PERIOD);
+//        }
     }
 }
