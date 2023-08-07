@@ -2,15 +2,13 @@ package com.fc5.adminback.domain.duty.controller;
 
 import com.fc5.adminback.common.response.APIDataResponse;
 import com.fc5.adminback.domain.duty.dto.DutyPagingResponseDto;
-import com.fc5.adminback.domain.duty.service.DutyService;
 import com.fc5.adminback.domain.duty.dto.UpdateDutyRequestDto;
-import com.fc5.adminback.domain.model.Status;
+import com.fc5.adminback.domain.duty.service.DutyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,11 +27,7 @@ public class DutyController {
     }
 
     @PutMapping("/{dutyId}")
-    public ResponseEntity<?> update(@PathVariable Long dutyId, @RequestBody UpdateDutyRequestDto updateDutyRequestDto) {
-
-        if (updateDutyRequestDto.getDutyDate().isAfter(LocalDate.now()) && updateDutyRequestDto.getStatus().equals(Status.COMPLETED)) {
-            throw new IllegalArgumentException("올바르지 않은 요청입니다.");
-        }
+    public ResponseEntity<?> update(@PathVariable Long dutyId, @RequestBody @Validated UpdateDutyRequestDto updateDutyRequestDto) {
         // TODO 수정하려는 기간의 시작 혹은 끝 중 하나의 시점이라도 이미 신청해둔 연차의 기간에 포함하면 예외 처리
 
 
