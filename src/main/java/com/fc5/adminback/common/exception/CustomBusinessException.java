@@ -1,6 +1,6 @@
-package com.fc5.adminback.domain.annual.exception;
+package com.fc5.adminback.common.exception;
 
-import com.fc5.adminback.common.util.ErrorCode;
+import com.fc5.adminback.common.exception.errorcode.ErrorCode;
 import lombok.Getter;
 
 @Getter

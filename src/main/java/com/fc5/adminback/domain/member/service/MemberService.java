@@ -3,6 +3,9 @@ package com.fc5.adminback.domain.member.service;
 import com.fc5.adminback.domain.admin.dto.MemberWithCompletedDutyCountPagingResponseDto;
 import com.fc5.adminback.domain.admin.dto.UpdateUserPositionDto;
 import com.fc5.adminback.domain.member.MemberWithCompletedDutyCount;
+import com.fc5.adminback.common.exception.InvalidPageException;
+import com.fc5.adminback.common.exception.NotFoundEntityException;
+import com.fc5.adminback.domain.member.exception.errorcode.MemberErrorCode;
 import com.fc5.adminback.domain.member.repository.MemberRepository;
 import com.fc5.adminback.domain.model.Member;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +26,7 @@ public class MemberService {
         int totalPages = memberRepository.findAll().size() / pageSize + 1;
 
         if (currentPage > totalPages) {
-            throw new IllegalArgumentException("더 이상 당직 정보가 존재하지 않습니다.");
+            throw new InvalidPageException(MemberErrorCode.INVALID_PAGE.getMessage(), MemberErrorCode.INVALID_PAGE);
         }
 
         return totalPages;
@@ -38,14 +41,14 @@ public class MemberService {
     @Transactional
     public void modifiyAnnual(Long userId, int size) {
         Member member = memberRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다"));
+                .orElseThrow(() -> new NotFoundEntityException(MemberErrorCode.INVALID_INDEX.getMessage(), MemberErrorCode.INVALID_INDEX));
         member.modifiyAnnualCount(size);
     }
 
     @Transactional
     public void modifyPosition(Long userId, UpdateUserPositionDto updateUserPositionDto) {
         Member member = memberRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다"));
+                .orElseThrow(() -> new NotFoundEntityException(MemberErrorCode.INVALID_INDEX.getMessage(), MemberErrorCode.INVALID_INDEX));
         member.modifyPosition(updateUserPositionDto.getPosition());
     }
 }

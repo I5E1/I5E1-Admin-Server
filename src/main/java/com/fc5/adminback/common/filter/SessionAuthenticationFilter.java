@@ -2,7 +2,7 @@ package com.fc5.adminback.common.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fc5.adminback.common.response.APIDataResponse;
-import com.fc5.adminback.domain.annual.exception.errorcode.AnnualErrorCode;
+import com.fc5.adminback.domain.admin.exception.errorcode.AdminErrorCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
@@ -35,9 +35,9 @@ public class SessionAuthenticationFilter implements Filter {
                 httpServletResponse.setStatus(401);
                 httpServletResponse.setCharacterEncoding("UTF-8");
                 httpServletResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
-                APIDataResponse.empty(HttpStatus.UNAUTHORIZED, AnnualErrorCode.UNAUTHORIZED.getMessage());
+                APIDataResponse.empty(HttpStatus.UNAUTHORIZED, AdminErrorCode.UNAUTHORIZED.getMessage());
 
-                APIDataResponse<Object> body = new APIDataResponse<>(HttpStatus.UNAUTHORIZED.value(), AnnualErrorCode.UNAUTHORIZED.getMessage(), null);
+                APIDataResponse<Object> body = new APIDataResponse<>(HttpStatus.UNAUTHORIZED.value(), AdminErrorCode.UNAUTHORIZED.getMessage(), null);
 
                 String jsonBody = objectMapper.writeValueAsString(body);
                 httpServletResponse.getWriter().write(jsonBody);

@@ -1,8 +1,11 @@
 package com.fc5.adminback.domain.duty.service;
 
+import com.fc5.adminback.common.exception.InvalidPageException;
+import com.fc5.adminback.common.exception.NotFoundEntityException;
 import com.fc5.adminback.domain.duty.dto.DutyPagingResponseDto;
 import com.fc5.adminback.domain.duty.dto.DutyResponseDto;
 import com.fc5.adminback.domain.duty.dto.UpdateDutyRequestDto;
+import com.fc5.adminback.domain.duty.exception.errorcode.DutyErrorCode;
 import com.fc5.adminback.domain.duty.repository.DutyRepository;
 import com.fc5.adminback.domain.model.Duty;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +32,7 @@ public class DutyService {
         List<DutyResponseDto> result = getPagingResult(pages);
 
         if (result.size() == 0) {
-            throw new IllegalArgumentException("더 이상 당직 정보가 존재하지 않습니다.");
+            throw new InvalidPageException(DutyErrorCode.NOT_ENOUGH_DUTY_PAGE.getMessage(), DutyErrorCode.NOT_ENOUGH_DUTY_PAGE);
         }
 
         return DutyPagingResponseDto.of(result, page, totalPage);
@@ -50,7 +53,7 @@ public class DutyService {
 
     public Duty get(Long dutyId) {
         return dutyRepository.findById(dutyId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 당직 정보입니다"));
+                .orElseThrow(() -> new NotFoundEntityException(DutyErrorCode.NOT_FOUND_DUTY.getMessage(), DutyErrorCode.NOT_FOUND_DUTY));
     }
 
     public void update(Long dutyId, UpdateDutyRequestDto updateDutyRequestDto) {
