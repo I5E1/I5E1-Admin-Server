@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 public enum MemberErrorCode implements ErrorCode {
-    INVALID_PAGE(HttpStatus.BAD_REQUEST, "더 이상 당직 정보가 존재하지 않습니다."),
+    INVALID_PAGE(HttpStatus.BAD_REQUEST, "더 이상 회원 정보가 존재하지 않습니다."),
     INVALID_INDEX(HttpStatus.BAD_REQUEST, "존재하지 않는 회원입니다"),
     ;
 

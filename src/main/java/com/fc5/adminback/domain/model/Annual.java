@@ -1,6 +1,8 @@
 package com.fc5.adminback.domain.model;
 
+import com.fc5.adminback.common.exception.NotEnoughAnnualCountException;
 import com.fc5.adminback.domain.annual.dto.UpdateAnnualRequestDto;
+import com.fc5.adminback.domain.annual.exception.errorcode.AnnualErrorCode;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
@@ -66,14 +68,33 @@ public class Annual {
     private LocalDateTime updatedAt;
 
     public void updateByRequest(UpdateAnnualRequestDto updateAnnualRequestDto) {
-        this.status = updateAnnualRequestDto.getStatus();
-        this.updatedAt = LocalDateTime.now();
-        this.reason = updateAnnualRequestDto.getReason();
-        this.startDate = updateAnnualRequestDto.getStartDate();
-        this.endDate = updateAnnualRequestDto.getEndDate();
-        this.summary = updateAnnualRequestDto.getSummary();
+        if (status.equals(Status.REQUESTED) && updateAnnualRequestDto.getStatus().equals(Status.APPROVED)) {
+            update(updateAnnualRequestDto);
+            return;
+        }
+
+        if (status.equals(Status.REQUESTED) && updateAnnualRequestDto.getStatus().equals(Status.REJECTED)) {
+            updateWithGiveBackAnnualCount(updateAnnualRequestDto);
+            return;
+        }
+
+        if (status.equals(Status.APPROVED) && updateAnnualRequestDto.getStatus().equals(Status.REJECTED)) {
+            updateWithGiveBackAnnualCount(updateAnnualRequestDto);
+            return;
+        }
 
         calculateSpentDays();
+    }
+
+    private void updateWithGiveBackAnnualCount(UpdateAnnualRequestDto updateAnnualRequestDto) {
+        update(updateAnnualRequestDto);
+        calculateSpentDays();
+        this.member.modifiyAnnualCount(this.member.getAnnualCount() + this.spentDays);
+    }
+
+    private void update(UpdateAnnualRequestDto updateAnnualRequestDto) {
+        this.status = updateAnnualRequestDto.getStatus();
+        this.updatedAt = LocalDateTime.now();
     }
 
     private void calculateSpentDays() {
@@ -84,10 +105,11 @@ public class Annual {
                 .filter(localDate -> DayOfWeek.SATURDAY.equals(localDate.getDayOfWeek()) || DayOfWeek.SUNDAY.equals(localDate.getDayOfWeek()))
                 .count();
 
-        // TODO : 계산한 spentDays가 member의 남은 연차 일 수 보다 크면 에러 처리
+        int result = Long.valueOf(size - includedWeekendSize).intValue();
+        if (result > member.getAnnualCount()) {
+            throw new NotEnoughAnnualCountException(AnnualErrorCode.NOT_FOUND_ANNUAL.getMessage(), AnnualErrorCode.NOT_FOUND_ANNUAL);
+        }
 
-        this.spentDays = Long.valueOf(size - includedWeekendSize).intValue();
-
-
+        this.spentDays = result;
     }
 }
