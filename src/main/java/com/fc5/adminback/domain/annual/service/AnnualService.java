@@ -1,5 +1,7 @@
 package com.fc5.adminback.domain.annual.service;
 
+import com.fc5.adminback.domain.annual.dto.AnnualPagingResponseDto;
+import com.fc5.adminback.domain.annual.dto.AnnualResponseDto;
 import com.fc5.adminback.domain.annual.dto.UpdateAnnualRequestDto;
 import com.fc5.adminback.domain.annual.repository.AnnualRepository;
 import com.fc5.adminback.domain.model.Annual;
@@ -10,9 +12,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class AnnualService {
 
     private final AnnualRepository annualRepository;
@@ -24,10 +29,10 @@ public class AnnualService {
         )));
     }
 
-    public void update(Annual annual, UpdateAnnualRequestDto updateAnnualRequestDto) {
+    @Transactional
+    public void update(Long annualId, UpdateAnnualRequestDto updateAnnualRequestDto) {
+        Annual annual = get(annualId);
         annual.updateByRequest(updateAnnualRequestDto);
-
-        annualRepository.save(annual);
     }
 
     public Annual get(Long annualId) {
@@ -35,7 +40,18 @@ public class AnnualService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 연차입니다."));
     }
 
-    public void delete(Annual annual) {
+    @Transactional
+    public void delete(Long annualId) {
+        Annual annual = get(annualId);
         annualRepository.delete(annual);
+    }
+
+    public AnnualPagingResponseDto getAllAnnuals(int currentPage) {
+        Page<Annual> pages = getAll(currentPage);
+        int totalPages = pages.getTotalPages();
+        List<AnnualResponseDto> annuals = pages.stream()
+                .map(AnnualResponseDto::of)
+                .collect(Collectors.toList());
+        return AnnualPagingResponseDto.of(annuals, currentPage, totalPages);
     }
 }
