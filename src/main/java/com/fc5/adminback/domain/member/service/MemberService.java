@@ -22,20 +22,21 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public int getTotalPages(int currentPage, int pageSize) {
-        int totalPages = memberRepository.findAll().size() / pageSize + 1;
+    public int getTotalCount(int currentPage, int pageSize) {
+        List<Member> members = memberRepository.findAll();
+        int totalPages = members.size() % pageSize == 0 ? members.size() / pageSize : members.size() / pageSize + 1;
 
         if (currentPage > totalPages) {
             throw new InvalidPageException(MemberErrorCode.INVALID_PAGE.getMessage(), MemberErrorCode.INVALID_PAGE);
         }
 
-        return totalPages;
+        return members.size();
     }
 
-    public MemberWithCompletedDutyCountPagingResponseDto getMamberPagingDto(int totalPages, int currentPage, int pageSize) {
+    public MemberWithCompletedDutyCountPagingResponseDto getMamberPagingDto(int totalCount, int currentPage, int pageSize) {
         PageRequest pageRequest = PageRequest.of(currentPage - 1, pageSize);
         List<MemberWithCompletedDutyCount> members = memberRepository.getAllMemberWithExecutedDutyCount(pageRequest);
-        return MemberWithCompletedDutyCountPagingResponseDto.of(members, totalPages, currentPage);
+        return MemberWithCompletedDutyCountPagingResponseDto.of(members, totalCount, currentPage);
     }
 
     @Transactional

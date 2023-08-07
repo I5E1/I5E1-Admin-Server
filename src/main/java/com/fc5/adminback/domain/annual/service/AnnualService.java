@@ -70,11 +70,11 @@ public class AnnualService {
 
     public AnnualPagingResponseDto getAllAnnuals(int currentPage) {
         Page<Annual> pages = getAll(currentPage);
-        int totalPages = pages.getTotalPages();
+        int totalCount = annualRepository.findAll().size();
         List<AnnualResponseDto> annuals = pages.stream()
                 .map(AnnualResponseDto::of)
                 .collect(Collectors.toList());
-        return AnnualPagingResponseDto.of(annuals, currentPage, totalPages);
+        return AnnualPagingResponseDto.of(annuals, currentPage, totalCount);
     }
 
     @Transactional
@@ -99,5 +99,9 @@ public class AnnualService {
     private Annual getAnnual(Long annualId) {
         return annualRepository.findById(annualId)
                 .orElseThrow(() -> new NotFoundEntityException(AnnualErrorCode.NOT_FOUND_ANNUAL.getMessage(), AnnualErrorCode.NOT_FOUND_ANNUAL));
+    }
+
+    public int getCount() {
+        return Long.valueOf(annualRepository.count()).intValue();
     }
 }
