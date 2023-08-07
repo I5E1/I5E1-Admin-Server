@@ -49,8 +49,6 @@ public class DutyService {
     public void update(Long dutyId, UpdateDutyRequestDto updateDutyRequestDto) {
         Duty duty = get(dutyId);
         duty.updateByRequest(updateDutyRequestDto);
-
-        dutyRepository.save(duty);
     }
 
     public void delete(Long dutyId) {
