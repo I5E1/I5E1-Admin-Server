@@ -29,12 +29,8 @@ public class AnnualController {
             @ModelAttribute @Valid PageIndex pageIndex
     ) {
 
-        Page<Annual> all = annualService.getAll(pageIndex.getPage());
-        int totalPages = all.getTotalPages();
-        List<AnnualResponseDto> annuals = all.stream()
-                .map(AnnualResponseDto::of)
-                .collect(Collectors.toList());
-        AnnualPagingResponseDto result = AnnualPagingResponseDto.of(annuals, pageIndex.getPage(), totalPages);
+        int currentPage = pageIndex.getPage();
+        AnnualPagingResponseDto result = annualService.getAllAnnuals(currentPage);
         return APIDataResponse.of(HttpStatus.OK, "모든 연차 조회에 성공하였습니다.", result);
     }
 
@@ -47,17 +43,15 @@ public class AnnualController {
 
         // TODO 수정하려는 기간의 시작 혹은 끝 중 하나의 시점이라도 이미 신청해둔 연차의 기간에 포함하면 예외 처리
 
-        Annual annual = annualService.get(annualId);
 
-        annualService.update(annual, updateAnnualRequestDto);
+        annualService.update(annualId, updateAnnualRequestDto);
 
         return APIDataResponse.empty(HttpStatus.OK, "연차 수정에 성공하였습니다");
     }
 
     @DeleteMapping("/{annualId}")
     public ResponseEntity<?> delete(@PathVariable Long annualId) {
-        Annual annual = annualService.get(annualId);
-        annualService.delete(annual);
+        annualService.delete(annualId);
 
         return APIDataResponse.empty(HttpStatus.OK, "연차 삭제에 성공하였습니다");
     }
