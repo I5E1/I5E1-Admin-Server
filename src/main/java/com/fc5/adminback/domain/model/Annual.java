@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.stream.IntStream;
 
-@Entity(name = "annual")
+@Entity
 @DynamicInsert
 @Getter
 @Builder

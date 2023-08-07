@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum AnnualErrorCode implements ErrorCode {
     NOT_FOUND_ANNUAL(HttpStatus.BAD_REQUEST, "존재하지 않는 연차입니다."),
+    OVERLAPPING_PERIOD(HttpStatus.BAD_REQUEST, "이미 존재하는 연차와 기간이 겹칩니다."),
     ;
 
 

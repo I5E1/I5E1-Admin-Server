@@ -1,6 +1,7 @@
 package com.fc5.adminback.domain.annual.service;
 
 import com.fc5.adminback.common.exception.NotFoundEntityException;
+import com.fc5.adminback.common.exception.OverlappingPeriodException;
 import com.fc5.adminback.domain.annual.dto.AnnualPagingResponseDto;
 import com.fc5.adminback.domain.annual.dto.AnnualResponseDto;
 import com.fc5.adminback.domain.annual.dto.UpdateAnnualRequestDto;
@@ -55,5 +56,17 @@ public class AnnualService {
                 .map(AnnualResponseDto::of)
                 .collect(Collectors.toList());
         return AnnualPagingResponseDto.of(annuals, currentPage, totalPages);
+    }
+
+    @Transactional
+    public void validatePeriod(Long annualId, UpdateAnnualRequestDto updateAnnualRequestDto) {
+        Annual annual = annualRepository.findById(annualId)
+                .orElseThrow(() -> new NotFoundEntityException(AnnualErrorCode.NOT_FOUND_ANNUAL.getMessage(), AnnualErrorCode.NOT_FOUND_ANNUAL));
+
+        List<Annual> annualsByInvalidDate = annualRepository.findAnnualByInvalidDate(annual.getMember().getId(), updateAnnualRequestDto.getStartDate(), updateAnnualRequestDto.getEndDate());
+
+        if (annualsByInvalidDate.size() != 0) {
+            throw new OverlappingPeriodException(AnnualErrorCode.OVERLAPPING_PERIOD.getMessage(), AnnualErrorCode.OVERLAPPING_PERIOD);
+        }
     }
 }
