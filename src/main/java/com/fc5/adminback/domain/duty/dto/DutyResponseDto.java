@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class DutyResponseDto {
 
-    private Long id;
+    private Long dutyId;
     private MemberListResponseDto member;
     private LocalDate dutyDate;
     private String status;
@@ -20,7 +20,7 @@ public class DutyResponseDto {
 
     public static DutyResponseDto of(Duty duty) {
         return DutyResponseDto.builder()
-                .id(duty.getId())
+                .dutyId(duty.getId())
                 .dutyDate(duty.getDutyDate())
                 .status(duty.getStatus().getDescription())
                 .reason(duty.getReason())
