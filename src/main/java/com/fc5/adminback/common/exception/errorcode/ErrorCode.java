@@ -1,4 +1,4 @@
-package com.fc5.adminback.common.util;
+package com.fc5.adminback.common.exception.errorcode;
 
 import org.springframework.http.HttpStatus;
 

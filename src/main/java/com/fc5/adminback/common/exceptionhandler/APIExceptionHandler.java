@@ -2,7 +2,7 @@ package com.fc5.adminback.common.exceptionhandler;
 
 import com.fc5.adminback.common.response.APIErrorResponse;
 import com.fc5.adminback.common.util.ErrorMessageConverter;
-import com.fc5.adminback.domain.annual.exception.CustomBusinessException;
+import com.fc5.adminback.common.exception.CustomBusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,7 +57,12 @@ public class APIExceptionHandler {
         StringBuilder stringBuilder = new StringBuilder();
         String[] convert = ErrorMessageConverter.convert(e.getBindingResult());
         IntStream.range(1, convert.length + 1)
-                .forEach(idx -> stringBuilder.append(idx).append(". ").append(convert[idx - 1]).append(" | "));
+                .forEach(idx -> {
+                    stringBuilder.append(idx).append(". ").append(convert[idx - 1]);
+                    if (idx != convert.length) {
+                        stringBuilder.append(" | ");
+                    }
+                });
 
         return handleExceptionInternal(e, stringBuilder.toString(), HttpStatus.BAD_REQUEST);
     }

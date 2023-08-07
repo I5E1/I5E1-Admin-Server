@@ -1,8 +1,10 @@
 package com.fc5.adminback.domain.annual.service;
 
+import com.fc5.adminback.common.exception.NotFoundEntityException;
 import com.fc5.adminback.domain.annual.dto.AnnualPagingResponseDto;
 import com.fc5.adminback.domain.annual.dto.AnnualResponseDto;
 import com.fc5.adminback.domain.annual.dto.UpdateAnnualRequestDto;
+import com.fc5.adminback.domain.annual.exception.errorcode.AnnualErrorCode;
 import com.fc5.adminback.domain.annual.repository.AnnualRepository;
 import com.fc5.adminback.domain.model.Annual;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +39,7 @@ public class AnnualService {
 
     public Annual get(Long annualId) {
         return annualRepository.findById(annualId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 연차입니다."));
+                .orElseThrow(() -> new NotFoundEntityException(AnnualErrorCode.NOT_FOUND_ANNUAL.getMessage(), AnnualErrorCode.NOT_FOUND_ANNUAL));
     }
 
     @Transactional
