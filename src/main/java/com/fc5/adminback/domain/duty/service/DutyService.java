@@ -42,7 +42,7 @@ public class DutyService {
     }
 
     private Page<Duty> getPages(int page) {
-        return dutyRepository.findAll(PageRequest.of(page - 1, 2, Sort.by(
+        return dutyRepository.findAll(PageRequest.of(page - 1, 10, Sort.by(
                 Sort.Order.desc("status"),
                 Sort.Order.desc("createdAt")
         )));

@@ -25,7 +25,7 @@ public class MemberController {
     public ResponseEntity<?> getPagingMemberList(
             @ModelAttribute @Valid PageIndex pageIndex
     ) {
-        int pageSize = 3;
+        int pageSize = 10;
         int totalPages = memberService.getTotalPages(pageIndex.getPage(), pageSize);
 
         MemberWithCompletedDutyCountPagingResponseDto result = memberService.getMamberPagingDto(totalPages, pageIndex.getPage(), pageSize);

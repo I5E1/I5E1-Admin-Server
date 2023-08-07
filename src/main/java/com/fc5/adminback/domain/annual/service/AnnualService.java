@@ -23,7 +23,7 @@ public class AnnualService {
     private final AnnualRepository annualRepository;
 
     public Page<Annual> getAll(int page) {
-        return annualRepository.findAll(PageRequest.of(page - 1, 2, Sort.by(
+        return annualRepository.findAll(PageRequest.of(page - 1, 10, Sort.by(
                 Sort.Order.desc("status"),
                 Sort.Order.desc("createdAt")
         )));
