@@ -2,8 +2,8 @@ package com.fc5.adminback.domain.admin.service;
 
 import com.fc5.adminback.domain.admin.dto.AdminLoginRequestDto;
 import com.fc5.adminback.domain.admin.repository.AdminRepository;
-import com.fc5.adminback.domain.annual.exception.errorcode.AnnualErrorCode;
-import com.fc5.adminback.domain.annual.exception.UnauthorizedAdminException;
+import com.fc5.adminback.domain.admin.exception.errorcode.AdminErrorCode;
+import com.fc5.adminback.domain.admin.exception.UnauthorizedAdminException;
 import com.fc5.adminback.domain.model.Admin;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class AdminService {
 
     public Admin login(AdminLoginRequestDto loginRequestDto) {
         Admin admin = adminRepository.findByEmail(loginRequestDto.getEmail())
-                .orElseThrow(() -> new UnauthorizedAdminException(AnnualErrorCode.UNAUTHORIZED.getMessage(), AnnualErrorCode.UNAUTHORIZED));
+                .orElseThrow(() -> new UnauthorizedAdminException(AdminErrorCode.UNAUTHORIZED.getMessage(), AdminErrorCode.UNAUTHORIZED));
 
         validatePassword(loginRequestDto, admin);
 
@@ -43,7 +43,7 @@ public class AdminService {
 
     private void validatePassword(AdminLoginRequestDto loginRequestDto, Admin admin) {
         if (!admin.getPassword().equals(loginRequestDto.getPassword())) {
-            throw new UnauthorizedAdminException(AnnualErrorCode.UNAUTHORIZED.getMessage(), AnnualErrorCode.UNAUTHORIZED);
+            throw new UnauthorizedAdminException(AdminErrorCode.UNAUTHORIZED.getMessage(), AdminErrorCode.UNAUTHORIZED);
         }
     }
 }
