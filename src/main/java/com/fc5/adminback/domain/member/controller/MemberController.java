@@ -4,9 +4,7 @@ import com.fc5.adminback.common.response.APIDataResponse;
 import com.fc5.adminback.domain.admin.dto.MemberWithCompletedDutyCountPagingResponseDto;
 import com.fc5.adminback.domain.admin.dto.UpdateUserPositionDto;
 import com.fc5.adminback.domain.annual.dto.PageIndex;
-import com.fc5.adminback.domain.member.repository.MemberRepository;
 import com.fc5.adminback.domain.member.service.MemberService;
-import com.fc5.adminback.domain.model.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +38,7 @@ public class MemberController {
     }
 
     @PatchMapping("/api/position/{userId}")
-    public ResponseEntity<?> updatePosition(@PathVariable Long userId, UpdateUserPositionDto updateUserPositionDto) {
+    public ResponseEntity<?> updatePosition(@PathVariable Long userId, @Valid UpdateUserPositionDto updateUserPositionDto) {
 
         memberService.modifyPosition(userId, updateUserPositionDto);
 
