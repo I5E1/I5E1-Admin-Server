@@ -1,9 +1,11 @@
 package com.fc5.adminback.domain.annual.controller;
 
+import com.fc5.adminback.common.exception.InvalidPageException;
 import com.fc5.adminback.common.response.APIDataResponse;
 import com.fc5.adminback.domain.annual.dto.AnnualPagingResponseDto;
 import com.fc5.adminback.domain.annual.dto.PageIndex;
 import com.fc5.adminback.domain.annual.dto.UpdateAnnualRequestDto;
+import com.fc5.adminback.domain.annual.exception.errorcode.AnnualErrorCode;
 import com.fc5.adminback.domain.annual.service.AnnualService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,7 +26,14 @@ public class AnnualController {
             @ModelAttribute @Valid PageIndex pageIndex
     ) {
 
+        int pageSize = 10;
         int currentPage = pageIndex.getPage();
+        int totalCount = annualService.getCount();
+        int totalPages = totalCount % pageSize == 0 ? totalCount / pageSize : totalCount / pageSize + 1;
+
+        if (currentPage > totalPages) {
+            throw new InvalidPageException(AnnualErrorCode.NOT_ENOUGH_ANNUAL_PAGE.getMessage(), AnnualErrorCode.NOT_ENOUGH_ANNUAL_PAGE);
+        }
         AnnualPagingResponseDto result = annualService.getAllAnnuals(currentPage);
         return APIDataResponse.of(HttpStatus.OK, "모든 연차 조회에 성공하였습니다.", result);
     }

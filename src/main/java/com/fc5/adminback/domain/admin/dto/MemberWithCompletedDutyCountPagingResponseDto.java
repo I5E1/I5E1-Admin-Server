@@ -11,15 +11,15 @@ import java.util.List;
 @Getter
 public class MemberWithCompletedDutyCountPagingResponseDto {
 
-    private int totalPages;
+    private int totalCount;
     private int currentPage;
     private List<MemberWithCompletedDutyCount> members;
 
-    public static MemberWithCompletedDutyCountPagingResponseDto of(List<MemberWithCompletedDutyCount> members, int totalPages, int currentPage) {
+    public static MemberWithCompletedDutyCountPagingResponseDto of(List<MemberWithCompletedDutyCount> members, int totalCount, int currentPage) {
         return MemberWithCompletedDutyCountPagingResponseDto.builder()
                 .members(members)
                 .currentPage(currentPage)
-                .totalPages(totalPages)
+                .totalCount(totalCount)
                 .build();
     }
 }

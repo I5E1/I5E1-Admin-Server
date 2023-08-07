@@ -10,14 +10,14 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class DutyPagingResponseDto {
 
-    private int totalPages;
+    private int totalCount;
     private int currentPage;
     private List<DutyResponseDto> duties;
 
-    public static DutyPagingResponseDto of(List<DutyResponseDto> duties, int currentPage, int totalPages) {
+    public static DutyPagingResponseDto of(List<DutyResponseDto> duties, int currentPage, int totalCount) {
         return DutyPagingResponseDto.builder()
                 .currentPage(currentPage)
-                .totalPages(totalPages)
+                .totalCount(totalCount)
                 .duties(duties)
                 .build();
     }

@@ -24,9 +24,9 @@ public class MemberController {
             @ModelAttribute @Valid PageIndex pageIndex
     ) {
         int pageSize = 10;
-        int totalPages = memberService.getTotalPages(pageIndex.getPage(), pageSize);
+        int totalCount = memberService.getTotalCount(pageIndex.getPage(), pageSize);
 
-        MemberWithCompletedDutyCountPagingResponseDto result = memberService.getMamberPagingDto(totalPages, pageIndex.getPage(), pageSize);
+        MemberWithCompletedDutyCountPagingResponseDto result = memberService.getMamberPagingDto(totalCount, pageIndex.getPage(), pageSize);
 
         return APIDataResponse.of(HttpStatus.OK, "모든 유저 조회에 성공하였습니다.", result);
     }

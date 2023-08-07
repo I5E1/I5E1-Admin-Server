@@ -30,14 +30,14 @@ public class DutyService {
     public DutyPagingResponseDto getAll(int page) {
         Page<Duty> pages = getPages(page);
 
-        int totalPage = pages.getTotalPages();
+        int totalCount = Long.valueOf(dutyRepository.count()).intValue();
         List<DutyResponseDto> result = getPagingResult(pages);
 
         if (result.size() == 0) {
             throw new InvalidPageException(DutyErrorCode.NOT_ENOUGH_DUTY_PAGE.getMessage(), DutyErrorCode.NOT_ENOUGH_DUTY_PAGE);
         }
 
-        return DutyPagingResponseDto.of(result, page, totalPage);
+        return DutyPagingResponseDto.of(result, page, totalCount);
     }
 
     @Transactional(readOnly = true)
@@ -67,5 +67,9 @@ public class DutyService {
                 Sort.Order.desc("status"),
                 Sort.Order.desc("createdAt")
         )));
+    }
+
+    public int getCount() {
+        return Long.valueOf(dutyRepository.count()).intValue();
     }
 }
