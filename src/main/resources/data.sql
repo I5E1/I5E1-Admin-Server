@@ -16,18 +16,16 @@ insert into member (email, password, name, position, tel, annual_count, created_
 /*
 REQUESTED("신청 중"), - 깎고
 APPROVED("승인 완료"), - 깎인 상태 그대로
-CANCEL_PENDING("취소 중"), - 깎인 상태 그대로
 CANCELED("취소 완료"), - 돌려주고
 REJECTED("요청 반려"), - 돌려주고
-CANCEL_REJECTED("취소 반려"), - 깎인 상태 그대로
 COMPLETED("완료"); - 깎인 상태 그대로
 */-- 11
 insert into annual (member_id, start_date, end_date, status, reason, created_at, updated_at, spent_days, summary) values (1, '2023-02-09', '2023-02-09', 'COMPLETED', '연차1-1', now(), now(), 1, '제목');
 insert into annual (member_id, start_date, end_date, status, reason, created_at, updated_at, spent_days, summary) values (1, '2023-09-22', '2023-09-24', 'REQUESTED', '연차1', now(), now(), 3, '제목');
 insert into annual (member_id, start_date, end_date, status, reason, created_at, updated_at, spent_days, summary) values (1, '2023-10-10', '2023-10-10', 'APPROVED', '연차1', now(), now(), 1, '제목');
-insert into annual (member_id, start_date, end_date, status, reason, created_at, updated_at, spent_days, summary) values (1, '2023-11-11', '2023-11-12', 'CANCEL_PENDING', '연차1', now(), now(), 2, '제목');
+insert into annual (member_id, start_date, end_date, status, reason, created_at, updated_at, spent_days, summary) values (1, '2023-11-11', '2023-11-12', 'APPROVED', '연차1', now(), now(), 2, '제목');
 insert into annual (member_id, start_date, end_date, status, reason, created_at, updated_at, spent_days, summary) values (1, '2023-05-05', '2023-05-15', 'CANCELED', '연차1', now(), now(), 11, '제목');
-insert into annual (member_id, start_date, end_date, status, reason, created_at, updated_at, spent_days, summary) values (1, '2023-08-15', '2023-08-15', 'CANCEL_REJECTED', '연차1', now(), now(), 1, '제목');
+insert into annual (member_id, start_date, end_date, status, reason, created_at, updated_at, spent_days, summary) values (1, '2023-08-15', '2023-08-15', 'APPROVED', '연차1', now(), now(), 1, '제목');
 insert into annual (member_id, start_date, end_date, status, reason, created_at, updated_at, spent_days, summary) values (1, '2023-04-05', '2023-04-09', 'REJECTED', '연차1', now(), now(), 5, '제목');
 insert into annual (member_id, start_date, end_date, status, reason, created_at, updated_at, spent_days, summary) values (2, DATE_ADD(NOW(), INTERVAL 5 DAY), DATE_ADD(NOW(), INTERVAL 8 DAY), 'APPROVED', '연차2-1', now(), now(), 4, '제목');
 insert into annual (member_id, start_date, end_date, status, reason, created_at, updated_at, spent_days, summary) values (2, DATE_ADD(NOW(), INTERVAL 9 DAY), DATE_ADD(NOW(), INTERVAL 11 DAY), 'REQUESTED', '연차2-2', now(), now(), 3, '제목');
@@ -39,9 +37,9 @@ insert into annual (member_id, start_date, end_date, status, reason, created_at,
 insert into annual (member_id, start_date, end_date, status, reason, created_at, updated_at, spent_days, summary) values (4, '2023-05-05', '2023-05-06', 'COMPLETED', '연차4-2', now(), now(), 2, '제목');
 insert into annual (member_id, start_date, end_date, status, reason, created_at, updated_at, spent_days, summary) values (4, '2022-12-31', '2023-01-03', 'COMPLETED', '연차4-3', now(), now(), 4, '제목');
 insert into annual (member_id, start_date, end_date, status, reason, created_at, updated_at, spent_days, summary) values (4, '2023-07-01', '2023-07-04', 'COMPLETED', '연차4-4', now(), now(), 4, '제목');
-insert into annual (member_id, start_date, end_date, status, reason, created_at, updated_at, spent_days, summary) values (5, '2023-08-05', '2023-08-09', 'CANCEL_PENDING', '연차5-1', now(), now(), 5, '제목');
+insert into annual (member_id, start_date, end_date, status, reason, created_at, updated_at, spent_days, summary) values (5, '2023-08-08', '2023-08-12', 'APPROVED', '연차5-1', now(), now(), 5, '제목');
 insert into annual (member_id, start_date, end_date, status, reason, created_at, updated_at, spent_days, summary) values (5, '2023-03-05', '2023-03-09', 'CANCELED', '연차5-2', now(), now(), 5, '제목');
-insert into annual (member_id, start_date, end_date, status, reason, created_at, updated_at, spent_days, summary) values (5, '2023-10-05', '2023-10-13', 'CANCEL_REJECTED', '연차5-3', now(), now(), 9, '제목');
+insert into annual (member_id, start_date, end_date, status, reason, created_at, updated_at, spent_days, summary) values (5, '2023-10-05', '2023-10-13', 'APPROVED', '연차5-3', now(), now(), 9, '제목');
 
 
 insert into duty (member_id, duty_date, status, reason, created_at, updated_at) values (1, DATE_ADD(NOW(), INTERVAL 2 DAY), 'APPROVED', '의무 당직', now(), now());
