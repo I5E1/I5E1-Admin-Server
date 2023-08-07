@@ -8,6 +8,7 @@ import com.fc5.adminback.domain.duty.dto.UpdateDutyRequestDto;
 import com.fc5.adminback.domain.duty.exception.errorcode.DutyErrorCode;
 import com.fc5.adminback.domain.duty.repository.DutyRepository;
 import com.fc5.adminback.domain.model.Duty;
+import com.fc5.adminback.domain.model.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,6 +26,7 @@ public class DutyService {
 
     private final DutyRepository dutyRepository;
 
+    @Transactional(readOnly = true)
     public DutyPagingResponseDto getAll(int page) {
         Page<Duty> pages = getPages(page);
 
@@ -38,19 +40,7 @@ public class DutyService {
         return DutyPagingResponseDto.of(result, page, totalPage);
     }
 
-    private List<DutyResponseDto> getPagingResult(Page<Duty> pages) {
-        return pages.stream()
-                .map(DutyResponseDto::of)
-                .collect(Collectors.toList());
-    }
-
-    private Page<Duty> getPages(int page) {
-        return dutyRepository.findAll(PageRequest.of(page - 1, 10, Sort.by(
-                Sort.Order.desc("status"),
-                Sort.Order.desc("createdAt")
-        )));
-    }
-
+    @Transactional(readOnly = true)
     public Duty get(Long dutyId) {
         return dutyRepository.findById(dutyId)
                 .orElseThrow(() -> new NotFoundEntityException(DutyErrorCode.NOT_FOUND_DUTY.getMessage(), DutyErrorCode.NOT_FOUND_DUTY));
@@ -66,5 +56,18 @@ public class DutyService {
     public void delete(Long dutyId) {
         Duty duty = get(dutyId);
         dutyRepository.delete(duty);
+    }
+
+    private List<DutyResponseDto> getPagingResult(Page<Duty> pages) {
+        return pages.stream()
+                .map(DutyResponseDto::of)
+                .collect(Collectors.toList());
+    }
+
+    private Page<Duty> getPages(int page) {
+        return dutyRepository.findAll(PageRequest.of(page - 1, 10, Sort.by(
+                Sort.Order.desc("status"),
+                Sort.Order.desc("createdAt")
+        )));
     }
 }

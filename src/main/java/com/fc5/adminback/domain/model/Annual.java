@@ -1,5 +1,6 @@
 package com.fc5.adminback.domain.model;
 
+import com.fc5.adminback.common.exception.InvalidUpdateStatusException;
 import com.fc5.adminback.common.exception.NotEnoughAnnualCountException;
 import com.fc5.adminback.domain.annual.dto.UpdateAnnualRequestDto;
 import com.fc5.adminback.domain.annual.exception.errorcode.AnnualErrorCode;
@@ -70,20 +71,23 @@ public class Annual {
     public void updateByRequest(UpdateAnnualRequestDto updateAnnualRequestDto) {
         if (status.equals(Status.REQUESTED) && updateAnnualRequestDto.getStatus().equals(Status.APPROVED)) {
             update(updateAnnualRequestDto);
+            calculateSpentDays();
             return;
         }
 
         if (status.equals(Status.REQUESTED) && updateAnnualRequestDto.getStatus().equals(Status.REJECTED)) {
             updateWithGiveBackAnnualCount(updateAnnualRequestDto);
+            calculateSpentDays();
             return;
         }
 
         if (status.equals(Status.APPROVED) && updateAnnualRequestDto.getStatus().equals(Status.REJECTED)) {
             updateWithGiveBackAnnualCount(updateAnnualRequestDto);
+            calculateSpentDays();
             return;
         }
 
-        calculateSpentDays();
+        throw new InvalidUpdateStatusException(AnnualErrorCode.INVALID_UPDATE_STATUS.getMessage(), AnnualErrorCode.INVALID_UPDATE_STATUS);
     }
 
     private void updateWithGiveBackAnnualCount(UpdateAnnualRequestDto updateAnnualRequestDto) {
