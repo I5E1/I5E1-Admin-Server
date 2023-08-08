@@ -40,7 +40,6 @@ public class AnnualController {
 
     @PutMapping("/{annualId}")
     public ResponseEntity<?> update(@PathVariable Long annualId, @RequestBody @Valid UpdateAnnualRequestDto updateAnnualRequestDto) {
-        annualService.validatePeriod(annualId, updateAnnualRequestDto);
         annualService.update(annualId, updateAnnualRequestDto);
 
         return APIDataResponse.empty(HttpStatus.OK, "연차 수정에 성공하였습니다");

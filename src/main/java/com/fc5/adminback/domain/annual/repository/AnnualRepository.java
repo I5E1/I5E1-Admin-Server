@@ -1,6 +1,8 @@
 package com.fc5.adminback.domain.annual.repository;
 
 import com.fc5.adminback.domain.model.Annual;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,4 +23,14 @@ public interface AnnualRepository extends JpaRepository<Annual, Long> {
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate
     );
+
+    @Query("SELECT a FROM Annual a " +
+            "ORDER BY " +
+            "CASE " +
+            "WHEN a.status = 'REQUESTED' THEN 0 " +
+            "WHEN a.status = 'APPROVED' THEN 1 " +
+            "WHEN a.status = 'CANCELED' THEN 2 " +
+            "WHEN a.status = 'REJECTED' THEN 3 " +
+            "ELSE 4 END")
+    Page<Annual> findAllWithOrder(PageRequest pageRequest);
 }
