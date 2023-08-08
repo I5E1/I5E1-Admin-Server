@@ -51,9 +51,10 @@ public class AnnualService {
             if (!(updateAnnualRequestDto.getStatus().equals(Status.APPROVED) || updateAnnualRequestDto.getStatus().equals(Status.REJECTED))) {
                 throw new InvalidUpdateStatusException(AnnualErrorCode.INVALID_UPDATE_STATUS.getMessage(), AnnualErrorCode.INVALID_UPDATE_STATUS);
             }
+            return;
         }
 
-        if (!(annual.getStatus().equals(Status.APPROVED) && updateAnnualRequestDto.getStatus().equals(Status.REJECTED))) {
+        if (!updateAnnualRequestDto.getStatus().equals(Status.REJECTED)) {
             throw new InvalidUpdateStatusException(AnnualErrorCode.INVALID_UPDATE_STATUS.getMessage(), AnnualErrorCode.INVALID_UPDATE_STATUS);
         }
     }
