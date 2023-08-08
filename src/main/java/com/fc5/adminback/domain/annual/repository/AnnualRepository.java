@@ -1,6 +1,7 @@
 package com.fc5.adminback.domain.annual.repository;
 
 import com.fc5.adminback.domain.model.Annual;
+import com.fc5.adminback.domain.model.Status;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -33,4 +34,9 @@ public interface AnnualRepository extends JpaRepository<Annual, Long> {
             "WHEN a.status = 'REJECTED' THEN 3 " +
             "ELSE 4 END")
     Page<Annual> findAllWithOrder(PageRequest pageRequest);
+
+    List<Annual> getAnnualByStatusAndStartDate(Status status, LocalDate startDate);
+
+    List<Annual> getAnnualByStatusAndEndDate(Status status, LocalDate endDate);
+
 }
