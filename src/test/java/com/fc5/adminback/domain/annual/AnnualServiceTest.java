@@ -33,7 +33,7 @@ class AnnualServiceTest {
         // given
         int pageIndex = 3;
         Page<Annual> mockPage = new MockPage(pageIndex);
-        given(annualRepository.findAll(any(PageRequest.class))).willReturn(mockPage);
+        given(annualRepository.findAllWithOrder(any(PageRequest.class))).willReturn(mockPage);
 
         // when
         Page<Annual> page = annualService.getAll(3);
