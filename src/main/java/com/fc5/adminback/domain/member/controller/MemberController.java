@@ -6,6 +6,7 @@ import com.fc5.adminback.domain.admin.dto.UpdateUserPositionDto;
 import com.fc5.adminback.domain.annual.dto.PageIndex;
 import com.fc5.adminback.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,4 +47,10 @@ public class MemberController {
     }
 
     // TODO 회원 검색 API 구현
+    @GetMapping("/api/search")
+    public ResponseEntity<?> searchByName(@RequestParam String query, @RequestParam int page) {
+        int totalCount = memberService.getTotalCount(page, 10);
+        MemberWithCompletedDutyCountPagingResponseDto result = memberService.searchByName(totalCount, page, query);
+        return APIDataResponse.of(HttpStatus.OK, "회원 검색에 성공하였습니다.", result);
+    }
 }
