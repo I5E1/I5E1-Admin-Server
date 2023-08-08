@@ -86,10 +86,7 @@ public class DutyService {
     }
 
     private Page<Duty> getPages(int page) {
-        return dutyRepository.findAll(PageRequest.of(page - 1, 10, Sort.by(
-                Sort.Order.desc("status"),
-                Sort.Order.desc("createdAt")
-        )));
+        return dutyRepository.findAllWithOrder(PageRequest.of(page - 1, 10));
     }
 
     public int getCount() {
