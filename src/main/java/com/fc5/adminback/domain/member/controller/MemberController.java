@@ -38,7 +38,7 @@ public class MemberController {
     }
 
     @PatchMapping("/api/position/{userId}")
-    public ResponseEntity<?> updatePosition(@PathVariable Long userId, @Valid UpdateUserPositionDto updateUserPositionDto) {
+    public ResponseEntity<?> updatePosition(@PathVariable Long userId, @Valid @RequestBody UpdateUserPositionDto updateUserPositionDto) {
 
         memberService.modifyPosition(userId, updateUserPositionDto);
 
