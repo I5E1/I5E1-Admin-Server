@@ -1,14 +1,19 @@
 package com.fc5.adminback.domain.duty.service;
 
 import com.fc5.adminback.common.exception.InvalidPageException;
+import com.fc5.adminback.common.exception.InvalidUpdateStatusException;
 import com.fc5.adminback.common.exception.NotFoundEntityException;
+import com.fc5.adminback.domain.annual.dto.UpdateAnnualRequestDto;
+import com.fc5.adminback.domain.annual.exception.errorcode.AnnualErrorCode;
 import com.fc5.adminback.domain.duty.dto.DutyPagingResponseDto;
 import com.fc5.adminback.domain.duty.dto.DutyResponseDto;
 import com.fc5.adminback.domain.duty.dto.UpdateDutyRequestDto;
 import com.fc5.adminback.domain.duty.exception.errorcode.DutyErrorCode;
 import com.fc5.adminback.domain.duty.repository.DutyRepository;
+import com.fc5.adminback.domain.model.Annual;
 import com.fc5.adminback.domain.model.Duty;
 import com.fc5.adminback.domain.model.Member;
+import com.fc5.adminback.domain.model.Status;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -48,7 +53,25 @@ public class DutyService {
 
     public void update(Long dutyId, UpdateDutyRequestDto updateDutyRequestDto) {
         Duty duty = get(dutyId);
+        validateRequest(duty, updateDutyRequestDto);
         duty.updateByRequest(updateDutyRequestDto);
+    }
+
+    private void validateRequest(Duty duty, UpdateDutyRequestDto updateDutyRequestDto) {
+        if (!(duty.getStatus().equals(Status.REQUESTED) || duty.getStatus().equals(Status.APPROVED))) {
+            throw new InvalidUpdateStatusException(AnnualErrorCode.INVALID_UPDATE_STATUS.getMessage(), AnnualErrorCode.INVALID_UPDATE_STATUS);
+        }
+
+        if (duty.getStatus().equals(Status.REQUESTED)) {
+            if (!(updateDutyRequestDto.getStatus().equals(Status.APPROVED) || updateDutyRequestDto.getStatus().equals(Status.REJECTED))) {
+                throw new InvalidUpdateStatusException(AnnualErrorCode.INVALID_UPDATE_STATUS.getMessage(), AnnualErrorCode.INVALID_UPDATE_STATUS);
+            }
+            return;
+        }
+
+        if (!updateDutyRequestDto.getStatus().equals(Status.REJECTED)) {
+            throw new InvalidUpdateStatusException(AnnualErrorCode.INVALID_UPDATE_STATUS.getMessage(), AnnualErrorCode.INVALID_UPDATE_STATUS);
+        }
     }
 
     public void delete(Long dutyId) {
