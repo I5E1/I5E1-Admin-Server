@@ -52,4 +52,9 @@ public class MemberService {
                 .orElseThrow(() -> new NotFoundEntityException(MemberErrorCode.INVALID_INDEX.getMessage(), MemberErrorCode.INVALID_INDEX));
         member.modifyPosition(updateUserPositionDto.getPosition());
     }
+
+    public MemberWithCompletedDutyCountPagingResponseDto searchByName(int totalCount, int page, String query) {
+        List<MemberWithCompletedDutyCount> members = memberRepository.findByNameContainingWithExecutedDutyCount(PageRequest.of(page - 1, 10), query);
+        return MemberWithCompletedDutyCountPagingResponseDto.of(members, totalCount, page);
+    }
 }
