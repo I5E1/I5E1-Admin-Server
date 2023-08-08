@@ -70,7 +70,7 @@ public class Annual {
 
     public void updateByRequest(UpdateAnnualRequestDto updateAnnualRequestDto) {
         if (status.equals(Status.REQUESTED) && updateAnnualRequestDto.getStatus().equals(Status.APPROVED)) {
-            update(updateAnnualRequestDto);
+            updateStatus(updateAnnualRequestDto);
             calculateSpentDays();
             return;
         }
@@ -90,13 +90,13 @@ public class Annual {
         throw new InvalidUpdateStatusException(AnnualErrorCode.INVALID_UPDATE_STATUS.getMessage(), AnnualErrorCode.INVALID_UPDATE_STATUS);
     }
 
-    private void updateWithGiveBackAnnualCount(UpdateAnnualRequestDto updateAnnualRequestDto) {
-        update(updateAnnualRequestDto);
+    public void updateWithGiveBackAnnualCount(UpdateAnnualRequestDto updateAnnualRequestDto) {
+        updateStatus(updateAnnualRequestDto);
         calculateSpentDays();
         this.member.modifiyAnnualCount(this.member.getAnnualCount() + this.spentDays);
     }
 
-    private void update(UpdateAnnualRequestDto updateAnnualRequestDto) {
+    public void updateStatus(UpdateAnnualRequestDto updateAnnualRequestDto) {
         this.status = updateAnnualRequestDto.getStatus();
         this.updatedAt = LocalDateTime.now();
     }
@@ -110,9 +110,6 @@ public class Annual {
                 .count();
 
         int result = Long.valueOf(size - includedWeekendSize).intValue();
-        if (result > member.getAnnualCount()) {
-            throw new NotEnoughAnnualCountException(AnnualErrorCode.NOT_FOUND_ANNUAL.getMessage(), AnnualErrorCode.NOT_FOUND_ANNUAL);
-        }
 
         this.spentDays = result;
     }
