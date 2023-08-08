@@ -46,7 +46,6 @@ public class MemberController {
         return APIDataResponse.empty(HttpStatus.OK, "회원의 직급을 수정하였습니다.");
     }
 
-    // TODO 회원 검색 API 구현
     @GetMapping("/api/search")
     public ResponseEntity<?> searchByName(@RequestParam String query, @RequestParam int page) {
         int totalCount = memberService.getTotalCount(page, 10);
