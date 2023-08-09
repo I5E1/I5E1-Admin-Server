@@ -5,6 +5,7 @@ import com.fc5.adminback.common.response.APIDataResponse;
 import com.fc5.adminback.domain.annual.dto.AnnualPagingResponseDto;
 import com.fc5.adminback.domain.annual.dto.PageIndex;
 import com.fc5.adminback.domain.annual.dto.UpdateAnnualRequestDto;
+import com.fc5.adminback.domain.annual.dto.UpdateAnnualResponseDto;
 import com.fc5.adminback.domain.annual.exception.errorcode.AnnualErrorCode;
 import com.fc5.adminback.domain.annual.service.AnnualService;
 import lombok.RequiredArgsConstructor;
@@ -40,9 +41,9 @@ public class AnnualController {
 
     @PutMapping("/{annualId}")
     public ResponseEntity<?> update(@PathVariable Long annualId, @RequestBody @Valid UpdateAnnualRequestDto updateAnnualRequestDto) {
-        annualService.update(annualId, updateAnnualRequestDto);
+        UpdateAnnualResponseDto result = annualService.update(annualId, updateAnnualRequestDto);
 
-        return APIDataResponse.empty(HttpStatus.OK, "연차 수정에 성공하였습니다");
+        return APIDataResponse.of(HttpStatus.OK, "연차 수정에 성공하였습니다", result);
     }
 
     @DeleteMapping("/{annualId}")

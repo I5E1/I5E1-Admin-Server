@@ -8,6 +8,7 @@ import com.fc5.adminback.domain.annual.exception.errorcode.AnnualErrorCode;
 import com.fc5.adminback.domain.duty.dto.DutyPagingResponseDto;
 import com.fc5.adminback.domain.duty.dto.DutyResponseDto;
 import com.fc5.adminback.domain.duty.dto.UpdateDutyRequestDto;
+import com.fc5.adminback.domain.duty.dto.UpdateDutyResponseDto;
 import com.fc5.adminback.domain.duty.exception.errorcode.DutyErrorCode;
 import com.fc5.adminback.domain.duty.repository.DutyRepository;
 import com.fc5.adminback.domain.model.Annual;
@@ -51,10 +52,13 @@ public class DutyService {
                 .orElseThrow(() -> new NotFoundEntityException(DutyErrorCode.NOT_FOUND_DUTY.getMessage(), DutyErrorCode.NOT_FOUND_DUTY));
     }
 
-    public void update(Long dutyId, UpdateDutyRequestDto updateDutyRequestDto) {
+    public UpdateDutyResponseDto update(Long dutyId, UpdateDutyRequestDto updateDutyRequestDto) {
         Duty duty = get(dutyId);
         validateRequest(duty, updateDutyRequestDto);
         duty.updateByRequest(updateDutyRequestDto);
+        return UpdateDutyResponseDto.builder()
+                .status(duty.getStatus().getDescription())
+                .build();
     }
 
     private void validateRequest(Duty duty, UpdateDutyRequestDto updateDutyRequestDto) {
