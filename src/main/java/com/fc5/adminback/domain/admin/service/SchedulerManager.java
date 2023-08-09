@@ -26,7 +26,6 @@ public class SchedulerManager {
 
     @Scheduled(cron = "0 * * * * *")
     public void changeStatus() {
-        System.out.println("크론 실행!!!");
         changeAnnualStatus();
         changeDutyStatus();
     }
@@ -44,12 +43,10 @@ public class SchedulerManager {
                 .build();
         approvedDuties.forEach(duty -> duty.updateByRequest(completed));
 
-        System.out.println(approvedDuties);
         List<Duty> requestedDuties = dutyRepository.getDutyByStatusAndDutyDate(Status.REQUESTED, today.minusDays(1L));
         UpdateDutyRequestDto rejected = UpdateDutyRequestDto.builder()
                 .status(Status.REJECTED)
                 .build();
-        System.out.println(requestedDuties);
         requestedDuties.forEach(duty -> duty.updateByRequest(rejected));
     }
 
@@ -65,15 +62,12 @@ public class SchedulerManager {
                 .status(Status.COMPLETED)
                 .build();
 
-        System.out.println(approvedAnnuals);
         approvedAnnuals.forEach(annual -> annual.updateStatus(completed));
 
         List<Annual> requestedAnnuals = annualRepository.getAnnualByStatusAndStartDate(Status.REQUESTED, today);
         UpdateAnnualRequestDto rejected = UpdateAnnualRequestDto.builder()
                 .status(Status.REJECTED)
                 .build();
-
-        System.out.println(requestedAnnuals);
 
         requestedAnnuals.forEach(annual -> annual.updateWithGiveBackAnnualCount(rejected));
     }

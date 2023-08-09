@@ -17,11 +17,12 @@ public class AdminService {
 
     private final AdminRepository adminRepository;
 
-    public Admin login(AdminLoginRequestDto loginRequestDto) {
+    public Admin login(HttpServletRequest request, AdminLoginRequestDto loginRequestDto) {
         Admin admin = adminRepository.findByEmail(loginRequestDto.getEmail())
                 .orElseThrow(() -> new UnauthorizedAdminException(AdminErrorCode.UNAUTHORIZED.getMessage(), AdminErrorCode.UNAUTHORIZED));
 
         validatePassword(loginRequestDto, admin);
+        setSession(request, admin);
 
         return admin;
     }
