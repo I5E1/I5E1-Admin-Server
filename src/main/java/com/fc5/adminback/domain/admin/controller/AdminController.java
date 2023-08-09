@@ -23,10 +23,7 @@ public class AdminController {
 
     @PostMapping("api/login")
     public ResponseEntity<?> login(@RequestBody @Valid AdminLoginRequestDto adminLoginRequestDto, HttpServletRequest request) {
-        Admin admin = adminService.login(adminLoginRequestDto);
-
-        adminService.setSession(request, admin);
-
+        adminService.login(request, adminLoginRequestDto);
 
         return APIDataResponse.empty(HttpStatus.OK, "로그인에 성공하였습니다");
     }

@@ -47,8 +47,7 @@ class AdminControllerTest {
         MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
 
 
-        given(adminService.login(mockDto)).willReturn(admin);
-        willDoNothing().given(adminService).setSession(mockHttpServletRequest, admin);
+        given(adminService.login(mockHttpServletRequest, mockDto)).willReturn(admin);
 
         // When
         ResultActions result = mockMvc.perform(
