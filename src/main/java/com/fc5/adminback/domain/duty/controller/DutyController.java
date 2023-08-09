@@ -5,6 +5,7 @@ import com.fc5.adminback.common.response.APIDataResponse;
 import com.fc5.adminback.domain.annual.dto.PageIndex;
 import com.fc5.adminback.domain.duty.dto.DutyPagingResponseDto;
 import com.fc5.adminback.domain.duty.dto.UpdateDutyRequestDto;
+import com.fc5.adminback.domain.duty.dto.UpdateDutyResponseDto;
 import com.fc5.adminback.domain.duty.exception.errorcode.DutyErrorCode;
 import com.fc5.adminback.domain.duty.service.DutyService;
 import com.fc5.adminback.domain.member.exception.errorcode.MemberErrorCode;
@@ -42,9 +43,9 @@ public class DutyController {
     @PutMapping("/{dutyId}")
     public ResponseEntity<?> update(@PathVariable Long dutyId, @RequestBody @Valid UpdateDutyRequestDto updateDutyRequestDto) {
 
-        dutyService.update(dutyId, updateDutyRequestDto);
+        UpdateDutyResponseDto result = dutyService.update(dutyId, updateDutyRequestDto);
 
-        return APIDataResponse.empty(HttpStatus.OK, "당직 수정에 성공하였습니다");
+        return APIDataResponse.of(HttpStatus.OK, "당직 수정에 성공하였습니다", result);
     }
 
     @DeleteMapping("/{dutyId}")

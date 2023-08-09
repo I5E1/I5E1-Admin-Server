@@ -5,6 +5,7 @@ import com.fc5.adminback.common.exception.NotFoundEntityException;
 import com.fc5.adminback.domain.annual.dto.AnnualPagingResponseDto;
 import com.fc5.adminback.domain.annual.dto.AnnualResponseDto;
 import com.fc5.adminback.domain.annual.dto.UpdateAnnualRequestDto;
+import com.fc5.adminback.domain.annual.dto.UpdateAnnualResponseDto;
 import com.fc5.adminback.domain.annual.exception.errorcode.AnnualErrorCode;
 import com.fc5.adminback.domain.annual.repository.AnnualRepository;
 import com.fc5.adminback.domain.model.Annual;
@@ -30,12 +31,18 @@ public class AnnualService {
     }
 
     @Transactional
-    public void update(Long annualId, UpdateAnnualRequestDto updateAnnualRequestDto) {
+    public UpdateAnnualResponseDto update(Long annualId, UpdateAnnualRequestDto updateAnnualRequestDto) {
         Annual annual = get(annualId);
 
         validateRequest(annual, updateAnnualRequestDto);
 
         annual.updateByRequest(updateAnnualRequestDto);
+
+        UpdateAnnualResponseDto result = UpdateAnnualResponseDto.builder()
+                .status(annual.getStatus().getDescription())
+                .build();
+
+        return result;
     }
 
     private void validateRequest(Annual annual, UpdateAnnualRequestDto updateAnnualRequestDto) {
