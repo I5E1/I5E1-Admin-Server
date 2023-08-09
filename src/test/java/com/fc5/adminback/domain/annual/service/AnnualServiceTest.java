@@ -1,4 +1,4 @@
-package com.fc5.adminback.domain.annual;
+package com.fc5.adminback.domain.annual.service;
 
 import com.fc5.adminback.domain.annual.mock.MockPage;
 import com.fc5.adminback.domain.annual.repository.AnnualRepository;

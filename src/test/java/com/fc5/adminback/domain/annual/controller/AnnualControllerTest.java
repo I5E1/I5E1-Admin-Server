@@ -1,4 +1,4 @@
-package com.fc5.adminback.domain.annual;
+package com.fc5.adminback.domain.annual.controller;
 
 import com.fc5.adminback.domain.annual.dto.AnnualPagingResponseDto;
 import com.fc5.adminback.domain.annual.dto.AnnualResponseDto;
