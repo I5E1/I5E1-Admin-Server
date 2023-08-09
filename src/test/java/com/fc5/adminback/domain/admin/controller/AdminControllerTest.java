@@ -43,7 +43,7 @@ class AdminControllerTest {
                 .email("qwer@naver.com")
                 .password("1234")
                 .build();
-        Admin admin = new Admin();
+        Admin admin = Admin.builder().build();
         MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
 
 
