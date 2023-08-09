@@ -9,11 +9,13 @@ import com.fc5.adminback.domain.member.exception.errorcode.MemberErrorCode;
 import com.fc5.adminback.domain.member.repository.MemberRepository;
 import com.fc5.adminback.domain.model.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -53,8 +55,13 @@ public class MemberService {
         member.modifyPosition(updateUserPositionDto.getPosition());
     }
 
-    public MemberWithCompletedDutyCountPagingResponseDto searchByName(int totalCount, int page, String query) {
-        List<MemberWithCompletedDutyCount> members = memberRepository.findByNameContainingWithExecutedDutyCount(PageRequest.of(page - 1, 10), query);
-        return MemberWithCompletedDutyCountPagingResponseDto.of(members, totalCount, page);
+    public MemberWithCompletedDutyCountPagingResponseDto searchByName(int page, String query) {
+        Page<MemberWithCompletedDutyCount> pages = memberRepository.findByNameContainingWithExecutedDutyCount(PageRequest.of(page - 1, 10), query);
+        List<MemberWithCompletedDutyCount> members = pages.stream().collect(Collectors.toList());
+
+        if (page > pages.getTotalPages()) {
+            throw new InvalidPageException(MemberErrorCode.INVALID_PAGE.getMessage(), MemberErrorCode.INVALID_PAGE);
+        }
+        return MemberWithCompletedDutyCountPagingResponseDto.of(members, Long.valueOf(pages.getTotalElements()).intValue(), page);
     }
 }

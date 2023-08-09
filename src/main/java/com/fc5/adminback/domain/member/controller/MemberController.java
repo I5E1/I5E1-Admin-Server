@@ -48,8 +48,7 @@ public class MemberController {
 
     @GetMapping("/api/search")
     public ResponseEntity<?> searchByName(@RequestParam String query, @RequestParam int page) {
-        int totalCount = memberService.getTotalCount(page, 10);
-        MemberWithCompletedDutyCountPagingResponseDto result = memberService.searchByName(totalCount, page, query);
+        MemberWithCompletedDutyCountPagingResponseDto result = memberService.searchByName(page, query);
         return APIDataResponse.of(HttpStatus.OK, "회원 검색에 성공하였습니다.", result);
     }
 }

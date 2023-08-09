@@ -29,5 +29,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
             "on m.id = d.member.id " +
             "where m.name like %:query% " +
             "group by m.id")
-    List<MemberWithCompletedDutyCount> findByNameContainingWithExecutedDutyCount(Pageable pageable, @Param("query") String query);
+    Page<MemberWithCompletedDutyCount> findByNameContainingWithExecutedDutyCount(Pageable pageable, @Param("query") String query);
 }
