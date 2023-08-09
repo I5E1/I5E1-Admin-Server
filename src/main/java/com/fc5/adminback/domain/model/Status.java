@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
 public enum Status {
 
     REQUESTED("미승인"),
@@ -14,4 +13,8 @@ public enum Status {
     COMPLETED("완료");
 
     private final String description;
+
+    Status(String description) {
+        this.description = description;
+    }
 }
